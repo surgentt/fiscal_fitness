@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-FiscalFitness::Application.config.secret_key_base = '17ffd6d549353d2aecce203a1a95a03b61a12e2ecb6a5c5a5869d1ea0e10dba4cc729adc985a7afdacf1dcf8ffe5f079c4583a7314d719e14eca029fe667c4e2'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+FiscalFitness::Application.config.secret_key_base = secure_token

@@ -10,9 +10,23 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'jquery-rails', '2.2.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '1.1.1'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '2.1.1'
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~>4.0.0'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '1.0.2'
+
 
 # Use postgresql as the database for Active Record
 gem 'pg'
+
+#Attach pictures
+gem 'paperclip', '~> 3.0'
+#Amazon store
+gem 'aws-sdk'
 
 group :development, :test do
 	gem 'rspec-rails', '2.13.1'
@@ -21,18 +35,6 @@ end
 group :test do
   gem 'selenium-webdriver', '2.0.0'
   gem 'capybara', '2.1.0'
-end
-
-group :assets do
-	# Use SCSS for stylesheets
-	gem 'sass-rails', '~> 4.0.0'
-	# Use Uglifier as compressor for JavaScript assets
-	gem 'uglifier', '2.1.1'
-	# Use CoffeeScript for .js.coffee assets and views
-	gem 'coffee-rails', '~>4.0.0'
-	# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-	gem 'jbuilder', '1.0.2'
-	# Twitter Bootstrap Gem
 end
 
 group :production do
@@ -45,10 +47,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-#Attach pictures
-gem 'paperclip', '~> 3.0'
-#Amazon store
-gem 'aws-sdk'
+
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

@@ -9,6 +9,16 @@ FiscalFitness::Application.routes.draw do
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
 
+  #Interest Rates Course Routes
+  get "interest_rates/intro"
+  get "interest_rates/tvm"
+  get "interest_rates/millionaire"
+  get "interest_rates/irateschange"
+  get "interest_rates/ear_apr"
+  get "interest_rates/irates_earn"
+  get "interest_rates/irates_cost"
+  get "interest_rates/conclusion"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

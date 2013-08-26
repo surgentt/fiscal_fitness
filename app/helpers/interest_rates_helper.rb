@@ -1,0 +1,2 @@
+module InterestRatesHelper
+end

@@ -5,14 +5,13 @@ ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-gem 'bootstrap-sass', '2.3.2.0'
 gem 'jquery-rails', '2.2.1'
 gem 'turbolinks', '1.1.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~>4.0.0'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '1.0.2'
+#render static pages in different controllers
+#gem 'high_voltage'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -47,8 +46,6 @@ group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

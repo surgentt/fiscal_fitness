@@ -1,0 +1,36 @@
+<div id="slide">
+  <h2>Time Value of Money</h2>
+  <p>
+    Let me start by asking you a simple question.
+  </p>
+
+  <p>
+    <strong>Which would you prefer?</strong>
+  </p>
+
+  <p>
+    <button class="button" id="20today">$20 Today</button>
+    <button class="button" id="25twoWeeks">$25 in Two Weeks</button>
+  </p>
+
+  <p>
+    <strong>Let's get even easier. What would you prefer?</strong>
+  </p>
+
+  <p>
+    <button class="button" id="aDollarToday">A Dollar Today</button>
+    <button class="button" id="aDollarTomorrow">A Dollar Tomorrow</button>
+  </p>
+
+  <p>
+    Time Value of Money is the idea that a dollar today is worth more than a dollar in the future. This is becuase that dollar received today can earn <strong>INTEREST</strong> up until it is used. Having money for any given length is time is valuable. 
+  </p>
+
+  <div class="bottom_left">
+    <%= link_to "Back", {:controller => :interest_rates, :action => :slide1}, class: "button" %>
+  </div>
+
+  <div class="bottom_right">
+    <%= link_to "Next", {:controller => :interest_rates, :action => :slide3}, class: "button" %>
+  </div>
+</div>

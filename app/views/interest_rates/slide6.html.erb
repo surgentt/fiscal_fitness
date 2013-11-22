@@ -1,0 +1,101 @@
+<div id="slide">
+  <h2>What can Interest Rates EARN you?</h2>
+    <p>
+      Let&apos;s look at some actual interest rates that you can realisticly expect to earn. Remember, these rates are just approximations. The actual rate you will earn, can vary depending on the length of the investment and the amount of your payments.
+    </p> 
+
+    <p>
+      Further, in the example of stocks, this rate is variable and at no point a guarantee. The higher the risk the greater the variance of the returns.
+    </p>
+
+    <p>
+      Click on each empty cell to reveal an approximate interest rate.
+    </p>
+
+    <table class="approx_irates">
+      <tr>
+        <th>Checking Account</th>
+        <th>Certified Deposit</th>
+        <th>Treasury Bonds</th>
+        <th>Stocks</th>
+        <th>Question 1</th>
+      </tr>
+      <tr>
+        <td>.04%</td>
+        <td>.08%</td>
+        <td>1.8%</td>
+        <td>13%</td>
+        <td>25%</td>
+      </tr>
+    </table>
+
+  <div id="irate_form">
+    <form  method=post id="iRateForm">
+    <table>
+      <tr>
+        <td>Monthly Investments:</td>
+        <td><input class="required" id="pmt" type=number size=13 maxlength=13></td>
+      </tr>
+      <tr>
+        <td>Length of Monthly Investments:</td>
+        <td><input class="required" id="numOfPeriods" type=number size=6 maxlength=3>
+          <select id="yearOrMonth" size=1>
+            <option value="y">Years
+            <option value="m">Months
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Interest Rate:</td>
+        <td><input class="required" type=text id="interest" size=6 maxlength=5><b> %</b></td>
+      </tr>
+      <tr>
+        <td class="center" colspan = "2">
+          <button class="button" id="howMuch">
+            How much extra savings are you getting?
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Savings with Interest:</td>
+        <td>
+          <input id="totalInterest" type=text name=total value="0.00" size=20>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Savings with out Interest:</td>
+        <td>
+          <input id="totalNoInterest" type=text name=total value="0.00" size=20>
+        </td>
+      </tr>
+      <tr>
+        <td>Extra Income:</td>
+        <td>
+          <input id="difference" type=text name=total value="0.00" size=20>
+        </td>
+      </tr>
+    </table>
+    </form>
+  </div>
+
+  <div id="chart_container">
+    <div id="chart"></div>
+    <div id="x_axis">
+      <svg height="48" width="605" class="rickshaw_graph x_axis_d3" style="position: relative; left: -27px;"><g class="x_ticks_d3 plain" transform="translate(27,48)"><g class="tick" transform="translate(0,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">0</text></g><g class="tick" transform="translate(83.33333333333333,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">20</text></g><g class="tick" transform="translate(166.66666666666666,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">40</text></g><g class="tick" transform="translate(250,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">60</text></g><g class="tick" transform="translate(333.3333333333333,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">80</text></g><g class="tick" transform="translate(416.6666666666667,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">100</text></g><g class="tick" transform="translate(500,0)" style="opacity: 1;"><line y2="-4" x2="0"></line><text y="-7" x="0" dy="0em" style="text-anchor: middle;">120</text></g><path class="domain" d="M0,-4V0H500V-4"></path></g></svg>
+    </div>
+    <div id="y_axis">
+      <svg class="rickshaw_graph y_axis" width="50" height="231.00000000000003" style="position: relative; top: -21px;"><g class="y_ticks plain" transform="translate(50, 21)"><g class="tick" transform="translate(0,210)" style="opacity: 1;"><line x2="-4" y2="0"></line><text x="-7" y="0" dy=".32em" style="text-anchor: end;"></text></g><g class="tick" transform="translate(0,97.22051985511527)" style="opacity: 1;"><line x2="-4" y2="0"></line><text x="-7" y="0" dy=".32em" style="text-anchor: end;">100K</text></g><path class="domain" d="M-4,0H0V210H-4"></path></g></svg> 
+    </div>
+    <div id="legend" class="rickshaw_legend">
+      <ul><li class="line"><div class="swatch" style="background-color: rgb(173, 216, 230);"></div><span class="label">Interest</span></li><li class="line"><div class="swatch" style="background-color: rgb(70, 130, 180);"></div><span class="label">No Interest</span></li></ul>
+    </div>
+  </div>
+
+    <div class="bottom_left">
+      <%= link_to "Back", {:controller => :interest_rates, :action => :slide5}, class: "button" %>
+    </div>
+
+    <div class="bottom_right">
+      <%= link_to "Next", {:controller => :interest_rates, :action => :slide7}, class: "button" %>
+    </div>
+</div>

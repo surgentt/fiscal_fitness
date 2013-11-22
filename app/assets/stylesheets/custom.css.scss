@@ -1,9 +1,19 @@
-@import "bootstrap";
-@import "bootstrap-responsive";
-
 /* mixins, variables, etc. */
 
-$grayMediumLight: #eaeaea;
+$gray: #eaeaea;
+$white: #FFFFFF;
+$black: #000000;
+$shadow: #28261f;
+$green: #008000;
+$button-green: #42ab18;
+$dark-red: #691616;
+$main-background: #FFFFFF;
+
+@mixin rounded-corners ($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -18,7 +28,7 @@ html {
 }
 
 body {
-  padding-top: 60px;
+  background-color: $main-background;
 }
 
 section {
@@ -31,54 +41,72 @@ textarea {
 
 .center {
   text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
+}
+
+.container {
+  clear: both;
 }
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
+  color: $green;
 }
 
 h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $grayLight;
+  margin: 15px 15px 15px 0px;
+  border-bottom: 3px solid $dark-red;
 }
 
 p {
-  font-size: 1.1em;
-  line-height: 1.7em;
+  margin: 10px 0px 10px 0px;
+}
+
+input {
+  text-align: right;
+}
+
+table {
+  margin: 15px 0px 15px 0px;
+  border: 1px solid black;
+}
+
+table td, th {
+  border: 1px solid $black;
 }
 
 
 /* header */
-
-#logo {
-  float: left;
+nav li {
   margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
-    color: white;
+  display: inline-block;
+  font-size: 14px;  
+}
+
+header {
+
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.7em;
+    color: $green;
+    padding: 8px 5px 5px 0px;
+    font-weight: bold;
     text-decoration: none;
+    &:hover {
+      color: lighten($green, 5%);
+      text-decoration: none;
+    }
+  }
+  a {
+    color: lighten($black, 50%);
+    &:hover {
+      color: darken($gray, 25%);
+    }
+  }
+
+  ul {
+    float: right;
   }
 }
 
@@ -87,12 +115,12 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  border-top: 1px solid lighten($black, 50%);
+  color: lighten($black, 50%);
   a {
-    color: $gray;
+    color: lighten($black, 50%);
     &:hover {
-      color: $grayDarker;
+      color: darken($gray, 25%);
     }
   }
   small {
@@ -101,12 +129,9 @@ footer {
   ul {
     float: right;
     list-style: none;
-    li {
-      float: left;
-      margin-left: 10px;
-    }
   }
 }
+
 
 /* miscellaneous */
 
@@ -114,18 +139,6 @@ footer {
   clear: both;
   float: left;
   width: 100%;
-  margin-top: 45px;
-  @include box_sizing;
-}
-
-/* forms */
-
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  @include box_sizing;
 }
 
 input {
@@ -144,3 +157,107 @@ input {
   @extend .control-group;
   @extend .error;
 }
+
+/*///////////*/
+/* Modal CSS */
+/*///////////*/
+
+/* http://blog.avtex.com/2012/01/26/cross-browser-css-only-modal-box/ */
+
+.dumbBoxWrap { /* The dic that shows/hides */
+  display: none; /* Start out hiddden */
+  z-index: 4001; /* high z-index */
+}
+
+.vertical-offset {
+  position: fixed;
+  top: 30%;
+  width: 100%;
+  z-index:4002;
+}
+
+.dumbBox {
+  max-width: 300px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $white;
+  border: 1px solid $black;
+  background-color: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+  box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+  background-clip: padding-box;
+}
+
+.modal_content {
+  padding: 4px 10px 4px 10px;
+  margin: 15px 0 15px 0;
+  text-align: center;
+}
+
+.close {
+  padding: 6px 6px 4px 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: .5;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .2;
+  filter: alpha(opacity=20);
+}
+
+/*/////////*/
+/* Buttons */
+/*/////////*/
+
+/*http://css-tricks.com/examples/ButtonMaker/#*/
+.button {
+  border-top: 1px solid lighten($button-green, 12%);
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  background: $button-green;
+  background: -webkit-gradient(linear, left top, left bottom, from(#1bbf20), to(#42ab18));
+  background: -webkit-linear-gradient(top, lighten($button-green, 8%), $button-green);
+  background: -moz-linear-gradient(top, lighten($button-green, 8%), $button-green);
+  background: -ms-linear-gradient(top, lighten($button-green, 8%), $button-green);
+  background: -o-linear-gradient(top, lighten($button-green, 8%), $button-green);
+  padding: 5.5px 11px;
+  @include rounded-corners (8px);
+  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+  color: $white;
+  font-size: 15px;
+  font-family: Georgia, serif;
+  text-decoration: none;
+  vertical-align: middle;
+
+  a {
+    text-decoration: none;
+  }
+
+  &:hover {
+    border-top-color: darken($button-green, 1%);
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    background: darken($button-green, 1%);
+    color: #ccc;
+  }
+  &:active {
+    border-top-color: darken($button-green, 1%);
+    background: darken($button-green, 1%);
+  }
+}
+

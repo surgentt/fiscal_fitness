@@ -1,25 +1,32 @@
 class InterestRatesController < ApplicationController
-  def intro
+  def slide1
   end
 
-  def tvm
+  def slide2
   end
 
-  def millionaire
+  def slide3
   end
 
-  def irateschange
+  def slide4
   end
 
-  def ear_apr
+  def slide5
   end
 
-  def irates_earn
+  def slide6
   end
 
-  def irates_cost
+  def slide7
   end
 
-  def conclusion
+  def slide8
   end
+
+  def slide9
+  end
+
+  def slide10
+  end
+
 end

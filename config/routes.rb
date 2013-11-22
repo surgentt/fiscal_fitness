@@ -9,15 +9,19 @@ FiscalFitness::Application.routes.draw do
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
 
-  #Interest Rates Course Routes
-  get "interest_rates/intro"
-  get "interest_rates/tvm"
-  get "interest_rates/millionaire"
-  get "interest_rates/irateschange"
-  get "interest_rates/ear_apr"
-  get "interest_rates/irates_earn"
-  get "interest_rates/irates_cost"
-  get "interest_rates/conclusion"
+  resources :interest_rates
+
+  #Interest Rates Course Routes, There must be an easier way to do this
+  match '/slide1',  to: 'interest_rates#slide1', via: 'get'
+  match '/slide2',  to: 'interest_rates#slide2', via: 'get'
+  match '/slide3',  to: 'interest_rates#slide3', via: 'get'
+  match '/slide4',  to: 'interest_rates#slide4', via: 'get'
+  match '/slide5',  to: 'interest_rates#slide5', via: 'get'
+  match '/slide6',  to: 'interest_rates#slide6', via: 'get'
+  match '/slide7',  to: 'interest_rates#slide7', via: 'get'
+  match '/slide8',  to: 'interest_rates#slide8', via: 'get'
+  match '/slide9',  to: 'interest_rates#slide9', via: 'get'
+  match '/slide10',  to: 'interest_rates#slide10', via: 'get'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

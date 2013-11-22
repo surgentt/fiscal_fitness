@@ -5,6 +5,13 @@ application up and running.
 
 Things you may want to cover:
 
+* Branching
+  - There are two branches while I decide if I want to use bootstrap or not. 
+  1. Git checkout "No_Bootstrap"
+  2. Git checout "Bootstrap"
+  --View these through "git branch" command
+
+
 * Ruby version
   - Ruby 2.0.0
 

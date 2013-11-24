@@ -11,18 +11,15 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require turbolinks
+//= require_self
 //= require_tree .
 //= require graph.js
 
 $(document).ready(function(){
 
-	/////////////////////
-	//Application Wide //
-	/////////////////////
-
-	$('#slide').hide().fadeIn(500);
+	//Speed at which a new slide appears
+	$('#slide').hide().fadeIn(1000);
 
 	/////////////////////////
 	//Answer's to Questions//

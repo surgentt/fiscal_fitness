@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 gem 'jquery-rails', '2.2.1'
@@ -10,16 +9,9 @@ gem 'turbolinks', '1.1.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~>4.0.0'
-#render static pages in different controllers
-#gem 'high_voltage'
 
-# Use postgresql as the database for Active Record
+# Use postgresql as the database locally and in production
 gem 'pg'
-
-#Attach pictures
-gem 'paperclip', '~> 3.0'
-#Amazon store
-gem 'aws-sdk'
 
 group :development, :test do
 	gem 'rspec-rails', '2.13.1'

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	console.log(d3);
+	// console.log(d3);
 
   // Prevent page from automatically reloading after submit
   $('#iRateForm').submit(function() {
@@ -8,7 +8,8 @@ $(document).ready(function(){
   });
 
 	//Run Code on Click of id="how Much"
-  $("#howMuch").click(function () {
+  $("#howMuch").click(function (ev) {
+    ev.preventDefault();
     var numOfPeriods = 0;
     //Validates for empty code only. 
     //Loop through all the required fields. If any are blank jump out
@@ -17,8 +18,6 @@ $(document).ready(function(){
       if($(this).val().length == 0) {
         $('.modal').show();
         $('.modal_content').text('Please fill in the Required Fields');
-        //If the first field is filled in make sure to catch blank feild and react occording on the second go through
-        clearGraph();
         return false;
       }
     });
@@ -29,13 +28,13 @@ $(document).ready(function(){
     numOfPeriods = yearToMonthAdj();
 
     // Change function that is run, depending on what the body of the page is named
-    if($('body.withoutInterest')[0]) {
+    if($('div.withoutInterest')[0]) {
       var futureValue = createiRateGraphNoInterest(numOfPeriods);
       testFVforMillionaire(futureValue);
-    } else if ($('body.withInterest')[0]) {
+    } else if ($('div.withInterest')[0]) {
       var futureValue = createiRateGraph(numOfPeriods);
       testFVforEarnings(futureValue);
-    } else if ($('body.bothInterest')[0]) {
+    } else if ($('div.bothInterest')[0]) {
       var futureValue = createBoth(numOfPeriods);
       testExtraIncome(extraIncome);
     }

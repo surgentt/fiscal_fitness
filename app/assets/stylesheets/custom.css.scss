@@ -75,19 +75,11 @@ table td, th {
   border: 1px solid $black;
 }
 
-
-/* header */
-nav li {
-  margin-right: 10px;
-  display: inline-block;
-  font-size: 14px;  
-}
-
 header {
 
   #logo {
     float: left;
-    margin-right: 10px;
+    margin-left: 10px;
     font-size: 1.7em;
     color: $green;
     padding: 8px 5px 5px 0px;
@@ -108,6 +100,17 @@ header {
   ul {
     float: right;
   }
+}
+
+/* header */
+nav ul {
+  max-margin-right: 30px;
+}
+
+nav li {
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 14px;  
 }
 
 /* footer */
@@ -166,7 +169,7 @@ input {
 
 .vertical-offset {
   position: fixed;
-  top: 30%;
+  top: 20%; //How far from the top the offset is
   width: 100%;
   z-index:4002;
 }

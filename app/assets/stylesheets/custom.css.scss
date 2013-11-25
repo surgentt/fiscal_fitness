@@ -75,6 +75,25 @@ table td, th {
   border: 1px solid $black;
 }
 
+/* Navigation */
+
+nav ul {
+  max-margin-right: 30px;
+}
+
+nav li {
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 14px;  
+}
+
+.nav_container {
+  max-width: 970px;
+  margin: 0 auto;
+}
+
+/* header */
+
 header {
 
   #logo {
@@ -102,17 +121,6 @@ header {
   }
 }
 
-/* header */
-nav ul {
-  max-margin-right: 30px;
-}
-
-nav li {
-  margin-right: 10px;
-  display: inline-block;
-  font-size: 14px;  
-}
-
 /* footer */
 
 footer {
@@ -133,11 +141,6 @@ footer {
     float: right;
     list-style: none;
   }
-}
-
-.nav_container {
-  max-width: 970px;
-  margin: 0 auto;
 }
 
 

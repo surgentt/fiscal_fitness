@@ -250,7 +250,7 @@ $(document).ready(function(){
       $('.modal_content').text('Your a Millionaire, but wasn\'t that pretty hard');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Keeping trying, you\'re not a millionaire yet');
+      $('.modal_content').text('Keeping trying! You\'re not a millionaire yet.');
     }
   }
 
@@ -260,7 +260,7 @@ $(document).ready(function(){
       $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Try and Save More');
+      $('.modal_content').text('Try and Save More. Notice ');
     }
   }
 

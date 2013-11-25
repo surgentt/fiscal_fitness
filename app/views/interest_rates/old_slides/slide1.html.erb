@@ -1,0 +1,29 @@
+<% provide(:title, 'Interest Rates') %>
+
+<div id="slide">
+  <h2>Course Introduction</h2>
+
+  <p>
+    <strong>THIS COURSE IS DESIGNED TO SAVE YOU MONEY!!</strong>
+  </p>
+
+  <p>
+    Every dollar you spend has financial implications that will affect you for the rest of your life. You have already been targeted by various financial institutions.
+  </p>
+
+  <p>
+     <strong>YOU EITHER NEED TO START WATCHING YOUR MONEY or SOMEONE ELSE WILL START WATCH IT FOR YOU.</strong>
+  </p>
+
+  <p>
+    Let&apos;s start with the most basic and fundamental topic of finance. Time Value of Money
+  </p>
+
+  <div class="bottom_left">
+    <%= link_to "Back", root_path, class: "button" %>
+  </div>      
+
+  <div class="bottom_right">
+    <%= link_to "Next", {:controller => :interest_rates, :action => :slide2}, class: "button" %>
+  </div>
+</div>

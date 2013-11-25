@@ -8,6 +8,16 @@ $(document).ready(function(){
 	/////////////////////////
 
 	//Slide 2 Questions
+	$("#aDollarToday").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('Sure who wouldn\'t');
+	});
+
+	$("#aDollarTomorrow").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('That doesn\'t make much sense.');
+	});
+
 	$("#20today").click(function() {
 		$('.modal').show();
 		//$('.dumbBox').css("background-color","#FF2621");
@@ -18,16 +28,6 @@ $(document).ready(function(){
 		$('.modal').show();
 		//$('.dumbBox').css("background-color","#40E50D");
 		$('.modal_content').text('You just earned 25% interst on your money');
-	});
-
-	$("#aDollarToday").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('Sure who wouldn\'t');
-	});
-
-	$("#aDollarTomorrow").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('That doesn\'t make much sense.');
 	});
 
 	//Slide 4 & Slide 7_1

@@ -1,0 +1,13 @@
+<% provide(:title, 'Email List') %>
+<h2>Email List</h2>
+
+<table>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.email %></td>
+    <td><%= user.name %></td>
+  </tr>
+<% end %>
+
+</table>

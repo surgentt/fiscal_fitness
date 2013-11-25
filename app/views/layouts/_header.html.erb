@@ -5,18 +5,9 @@
       <ul>
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Help", help_path %></li>
-        <% if signed_in? %>
           <li>
-            <%= link_to "Profile", current_user %>
+            <%= link_to "Join Email List", signup_path %>
           </li>
-          <li>
-            <%= link_to "Sign out", signout_path, method: "delete" %>
-          </li>
-        <% else %>
-          <li>
-            <%= link_to "Sign in", signin_path %>
-          </li>
-        <% end %>
       </ul>
     </nav>
   </s>

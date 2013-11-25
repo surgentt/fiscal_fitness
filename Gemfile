@@ -29,10 +29,10 @@ group :test do
   gem 'factory_girl_rails', '4.2.1'
 end
 
-group :production do
+group :production, :staging do
 	# enables serving assets in production and setting your logger to standard out
   # Heroku Pliguin for assets gems
-  gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor'
 end
 
 group :doc do

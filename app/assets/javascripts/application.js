@@ -14,11 +14,11 @@
 //= require turbolinks
 //= require_self
 //= require_tree .
-//= require custom.js
-//= require graph.js
+//= require custom
+//= require graph
 // Vendor Files
-//= require d3.v3.js
-//= require d3.layout.js
-//= require rickshaw.js
+//= require d3.v3
+//= require d3.layout
+//= require rickshaw
 
 

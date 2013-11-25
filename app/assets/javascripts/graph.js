@@ -19,26 +19,24 @@ $(document).ready(function(){
         $('.modal').show();
         $('.modal_content').text('Please fill in the Required Fields');
         return false;
+      } else {
+        clearGraph();
+        //Adjust the number of periods from years to month
+        numOfPeriods = yearToMonthAdj();
+
+        // Change function that is run, depending on what the body of the page is named
+        if($('div.withoutInterest')[0]) {
+          var futureValue = createiRateGraphNoInterest(numOfPeriods);
+          testFVforMillionaire(futureValue);
+        } else if ($('div.withInterest')[0]) {
+          var futureValue = createiRateGraph(numOfPeriods);
+          testFVforEarnings(futureValue);
+        } else if ($('div.bothInterest')[0]) {
+          var futureValue = createBoth(numOfPeriods);
+          testExtraIncome(extraIncome);
+        }
       }
     });
-
-    //Clear previous graph
-    clearGraph();
-    //Adjust the number of periods from years to month
-    numOfPeriods = yearToMonthAdj();
-
-    // Change function that is run, depending on what the body of the page is named
-    if($('div.withoutInterest')[0]) {
-      var futureValue = createiRateGraphNoInterest(numOfPeriods);
-      testFVforMillionaire(futureValue);
-    } else if ($('div.withInterest')[0]) {
-      var futureValue = createiRateGraph(numOfPeriods);
-      testFVforEarnings(futureValue);
-    } else if ($('div.bothInterest')[0]) {
-      var futureValue = createBoth(numOfPeriods);
-      testExtraIncome(extraIncome);
-    }
-
   });
 
   function clearGraph() {

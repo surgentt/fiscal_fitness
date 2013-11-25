@@ -39,12 +39,25 @@ textarea {
   resize: vertical;
 }
 
+/* Positioning */
+
 .center {
   text-align: center;
 }
 
 .container {
   clear: both;
+}
+
+.wrapper {
+  width: 900px;
+  margin: 0 auto;
+
+}
+
+.nav_container {
+  max-width: 970px;
+  margin: 0 auto;
 }
 
 /* typography */
@@ -85,11 +98,6 @@ nav li {
   margin-right: 10px;
   display: inline-block;
   font-size: 14px;  
-}
-
-.nav_container {
-  max-width: 970px;
-  margin: 0 auto;
 }
 
 /* header */

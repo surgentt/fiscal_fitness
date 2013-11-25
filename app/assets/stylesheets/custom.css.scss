@@ -39,26 +39,6 @@ textarea {
   resize: vertical;
 }
 
-/* Positioning */
-
-.center {
-  text-align: center;
-}
-
-.container {
-  clear: both;
-}
-
-.wrapper {
-  width: 900px;
-  margin: 0 auto;
-
-}
-
-.nav_container {
-  max-width: 970px;
-  margin: 0 auto;
-}
 
 /* typography */
 
@@ -100,9 +80,31 @@ nav li {
   font-size: 14px;  
 }
 
+/* Positioning */
+
+.center {
+  text-align: center;
+}
+
+.container {
+  clear: both;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.nav_container {
+  max-width: 970px;
+  margin: 0 auto;
+}
+
 /* header */
 
 header {
+  height: 40px;
+  border-bottom: 1px solid;
 
   #logo {
     float: left;
@@ -118,9 +120,9 @@ header {
     }
   }
   a {
-    color: lighten($black, 50%);
+    color: $green;
     &:hover {
-      color: darken($gray, 25%);
+      color: lighten($green, 5%);
     }
   }
 
@@ -137,9 +139,9 @@ footer {
   border-top: 1px solid lighten($black, 50%);
   color: lighten($black, 50%);
   a {
-    color: lighten($black, 50%);
+    color: $green;
     &:hover {
-      color: darken($gray, 25%);
+      color: lighten($green, 5%);
     }
   }
   small {

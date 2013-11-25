@@ -12,11 +12,8 @@
 //
 //= require jquery
 //= require turbolinks
-//= require_self
-//= require_tree .
 //= require custom
 //= require graph
-// Vendor Files
 //= require d3.v3
 //= require d3.layout
 //= require rickshaw

@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require rickshaw.min.css
  */
 
 @import "custom.css.scss";
@@ -17,6 +18,5 @@
 @import "sessions.css.scss";
 @import "static_pages.css.scss";
 @import "users.css.scss";
-@import "rickshaw.min.css";
 
 

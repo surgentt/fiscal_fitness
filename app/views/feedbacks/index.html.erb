@@ -1,0 +1,19 @@
+<div class="wrapper">
+<h2>Listing Feedback</h2>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>General Feedback</th>
+    <th>Email</th>
+  </tr>
+  <% @feedbacks.each do |feedback| %>
+  <tr>
+    <td><%= feedback.id %></td>
+    <td><%= feedback.general %></td>
+    <td><%= feedback.email %></td>
+  </tr>
+<% end %>
+
+</table>
+</div>

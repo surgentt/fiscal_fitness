@@ -9,6 +9,7 @@ gem 'turbolinks', '1.1.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~>4.0.0'
+gem 'pry', :group => :development
 
 # Use postgresql as the database locally and in production
 gem 'pg'

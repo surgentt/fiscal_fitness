@@ -109,6 +109,7 @@ table td, th {
 .wrapper {
   max-width: 900px;
   margin: 0 auto;
+  padding-left: 30px;
 }
 
 /* Navigation */
@@ -216,7 +217,7 @@ input {
 
 .vertical-offset {
   position: fixed;
-  top: 20%; //How far from the top the offset is
+  top: 16%; //How far from the top the offset is
   width: 100%;
   z-index:4002;
 }
@@ -292,6 +293,14 @@ input {
 
 #feedback_body {
   margin:  6px 0 6px 0;
+}
+
+input.feedback_general {
+  color: blue;
+  text-align: left;
+  columns:100px 3;
+  -webkit-columns:100px 3; /* Safari and Chrome */
+  -moz-columns:100px 3; /* Firefox */
 }
 
 

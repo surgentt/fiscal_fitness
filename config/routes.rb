@@ -11,7 +11,6 @@ FiscalFitness::Application.routes.draw do
   match '/about',   to: 'static_pages#about',   via: 'get'
 
   resources :interest_rates
-
   #Interest Rates Course Routes, There must be an easier way to do this
   match '/slide1',  to: 'interest_rates#slide1', via: 'get'
   match '/slide2',  to: 'interest_rates#slide2', via: 'get'
@@ -24,6 +23,7 @@ FiscalFitness::Application.routes.draw do
   match '/slide9',  to: 'interest_rates#slide9', via: 'get'
   match '/slide10',  to: 'interest_rates#slide10', via: 'get'
 
+  resources :feedbacks
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

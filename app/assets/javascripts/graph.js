@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	// console.log(d3);
+  // console.log(d3);
 
   // Prevent page from automatically reloading after submit
   $('#iRateForm').submit(function() {
@@ -270,7 +270,7 @@ $(document).ready(function(){
       $('.modal_content').text('You just saved ' + differenceString + ' Extra Income through the power of interest rates. Seems Awesome right.');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Keep trying you only earned '+ differenceString + 
+      $('.modal_content').text('Keep trying. You only earned '+ differenceString + 
         ' in extra income');
     }
   }

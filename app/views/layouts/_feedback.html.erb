@@ -1,19 +1,22 @@
-<a href="#feedbackModal" class="feedbackButton"></a>
+<a href="#feedbackModal" class="feedbackButton" id="feedback_button">Feedback</a>
 
 <div class="dumbBoxWrap feedbackModal">
   <div class="vertical-offset">
     <div class="dumbBox">
       <button type="button" class="closeFeedbackModal">×</button>
-      <div class="modal_content">
+      <div class="feedback_modal">
         <form  method=post class="feedback_form">
-        <div class="feedback_header">
-          We are working hard to improve our site. Please inform us with any improvements to the site you can think off. 
+        <div id="feedback_header">
+          Feedback
         </div>
+        <div id="feedback_body">
+          We love detailed feedback!
           <div>
-            <input class="required" class="feedback_box" type=text>
+            <input class="feedback_box" type=text>
           </div>
+        </div>
           <div class="center" colspan = "2">
-            <button class="button" id="howMuch">
+            <button class="button">
               Submit
             </button>
           </div>

@@ -47,6 +47,12 @@ $(document).ready(function(){
 		$('.modal').hide();
 	});
 
+	//Feedback Modal//
+
+	$('.feedbackButton').click(function() {
+		$('.feedbackModal').show();
+	});
+
 	$('.closeFeedbackModal').click(function() {
 		$('.dumbBox').css("background-color","#fff");
 		$('.feedbackModal').hide();

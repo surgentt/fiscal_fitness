@@ -64,9 +64,8 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  margin-bottom: 10px;
   font-weight: bold;
-  margin: 15px 15px 15px 0px;
+  margin: 0px 15px 15px 0px;
   padding: 1px;
   border-bottom: 3px solid $dark-red;
 }
@@ -211,7 +210,7 @@ input {
 /* http://blog.avtex.com/2012/01/26/cross-browser-css-only-modal-box/ */
 
 .dumbBoxWrap { /* The dic that shows/hides */
-  //display: none; /* Start out hiddden */
+  display: none; /* Start out hiddden */
   z-index: 4001; /* high z-index */
 }
 
@@ -239,12 +238,6 @@ input {
   background-clip: padding-box;
 }
 
-.modal_content {
-  padding: 4px 10px 4px 10px;
-  margin: 15px 0 15px 0;
-  text-align: center;
-}
-
 .close, .closeFeedbackModal {
   padding: 6px 6px 4px 0;
   cursor: pointer;
@@ -261,10 +254,46 @@ input {
   filter: alpha(opacity=20);
 }
 
-.feedback_header {
-  border-bottom: 1px solid;
-  text-align: left;
+.modal_content {
+  padding: 4px 10px 4px 10px;
+  margin: 15px 0 15px 0;
+  text-align: center;
 }
+
+#feedback_button {
+  position: fixed;
+  z-index: 1000;
+  background-color: $black;
+  color: $gray;
+  left: -28px;
+  top: 120px;
+  padding: 1px 5px 1px 5px;
+  text-decoration: none;
+  -moz-transform: rotate(-90deg);  /* FF3.5+ */
+  -o-transform: rotate(-90deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90deg);  /* Saf3.1+, Chrome */
+  //filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+  //-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+  &:hover {
+    color: $white;
+  }
+}
+
+.feedback_modal {
+  padding: 5px 20px 5px 20px;
+  margin: 15px 0 15px 0;
+}
+
+#feedback_header {
+  border-bottom: 2px solid;
+  text-align: left;
+  font-weight: bold;
+}
+
+#feedback_body {
+  margin:  6px 0 6px 0;
+}
+
 
 /*/////////*/
 /* Buttons */

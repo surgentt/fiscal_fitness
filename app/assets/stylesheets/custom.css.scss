@@ -1,5 +1,6 @@
-/* mixins, variables, etc. */
+// mixins
 
+//Colors
 $gray: #eaeaea;
 $white: #FFFFFF;
 $black: #000000;
@@ -9,6 +10,11 @@ $button-green: #42ab18;
 $dark-red: #691616;
 $main-background: #FFFFFF;
 
+//Font
+$font-base: sans-serif;
+
+
+//Mixins
 @mixin rounded-corners ($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;
@@ -29,6 +35,8 @@ html {
 
 body {
   background-color: $main-background;
+  // Size and spacing of the default font
+  font: normal 16px/1.5 $font-base;
 }
 
 section {
@@ -42,17 +50,36 @@ textarea {
 
 /* typography */
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
 h1 {
   color: $green;
+  font-size: 2em;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  font-weight: bold;
   margin: 15px 15px 15px 0px;
+  padding: 1px;
   border-bottom: 3px solid $dark-red;
 }
 
 p {
+  font-size: 1em;
+  line-height: 1.2em;
   margin: 10px 0px 10px 0px;
+}
+
+div {
+  font-size: 1em;
+  line-height: 1.2em;
 }
 
 input {
@@ -66,18 +93,8 @@ table {
 
 table td, th {
   border: 1px solid $black;
-}
-
-/* Navigation */
-
-nav ul {
-  max-margin-right: 30px;
-}
-
-nav li {
-  margin-right: 10px;
-  display: inline-block;
-  font-size: 14px;  
+  padding: 1px 3px 1px 3px;
+  font-size: 16px;
 }
 
 /* Positioning */
@@ -95,6 +112,19 @@ nav li {
   margin: 0 auto;
 }
 
+/* Navigation */
+
+nav ul {
+  max-margin-right: 30px;
+  padding: 5px 5px 5px 5px;
+}
+
+nav li {
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 14px;  
+}
+
 .nav_container {
   max-width: 970px;
   margin: 0 auto;
@@ -103,15 +133,15 @@ nav li {
 /* header */
 
 header {
-  height: 40px;
-  border-bottom: 1px solid;
+  height: 45px;
+  border-bottom: 1.5px solid;
 
   #logo {
     float: left;
     margin-left: 10px;
-    font-size: 1.7em;
+    font-size: 2em;
     color: $green;
-    padding: 8px 5px 5px 0px;
+    padding: 15px 5px 10px 5px;
     font-weight: bold;
     text-decoration: none;
     &:hover {
@@ -181,7 +211,7 @@ input {
 /* http://blog.avtex.com/2012/01/26/cross-browser-css-only-modal-box/ */
 
 .dumbBoxWrap { /* The dic that shows/hides */
-  display: none; /* Start out hiddden */
+  //display: none; /* Start out hiddden */
   z-index: 4001; /* high z-index */
 }
 
@@ -193,7 +223,7 @@ input {
 }
 
 .dumbBox {
-  max-width: 300px;
+  max-width: 400px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -215,7 +245,7 @@ input {
   text-align: center;
 }
 
-.close {
+.close, .closeFeedbackModal {
   padding: 6px 6px 4px 0;
   cursor: pointer;
   background: transparent;
@@ -231,6 +261,11 @@ input {
   filter: alpha(opacity=20);
 }
 
+.feedback_header {
+  border-bottom: 1px solid;
+  text-align: left;
+}
+
 /*/////////*/
 /* Buttons */
 /*/////////*/
@@ -242,7 +277,7 @@ input {
   border-right: none;
   border-left: none;
   background: $button-green;
-  background: -webkit-gradient(linear, left top, left bottom, from(#1bbf20), to(#42ab18));
+  background: -webkit-gradient(linear, left top, left bottom, from(lighten($button-green, 8%)), to($button-green));
   background: -webkit-linear-gradient(top, lighten($button-green, 8%), $button-green);
   background: -moz-linear-gradient(top, lighten($button-green, 8%), $button-green);
   background: -ms-linear-gradient(top, lighten($button-green, 8%), $button-green);
@@ -269,7 +304,7 @@ input {
     border-right: none;
     border-left: none;
     background: darken($button-green, 1%);
-    color: #ccc;
+    color: $gray;
   }
   &:active {
     border-top-color: darken($button-green, 1%);

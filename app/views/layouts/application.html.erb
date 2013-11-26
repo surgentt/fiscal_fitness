@@ -11,6 +11,7 @@
 
 	<!-- Render SCSS specific Controller -->
 	<body>
+	<%= render 'layouts/feedback' %>
 	<%= render 'layouts/header' %>
 	  <div class="container">
 			<% flash.each do |key, value| %>
@@ -22,6 +23,5 @@
 			<%= render 'layouts/footer' %>
 			<%= render 'layouts/modal' %>
   	</div>
-		<%= debug(params) if Rails.env.development? %>
 	</body>
 </html>

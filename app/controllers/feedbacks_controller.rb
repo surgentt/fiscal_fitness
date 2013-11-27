@@ -22,7 +22,7 @@ class FeedbacksController < ApplicationController
 
     def feedback_params
       params.require(:feedback).permit(:general, :grammer, :code,
-                                   :future_course, :price, :satisfaction, :email)
+                                   :future_course, :price, :satisfaction, :email, :url)
     end
 
 end

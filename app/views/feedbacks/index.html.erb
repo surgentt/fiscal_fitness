@@ -6,12 +6,14 @@
     <th>Id</th>
     <th>General Feedback</th>
     <th>Email</th>
+    <th>Request Page</th>
   </tr>
   <% @feedbacks.each do |feedback| %>
   <tr>
     <td><%= feedback.id %></td>
     <td><%= feedback.general %></td>
     <td><%= feedback.email %></td>
+    <td><%= feedback.url %></td>
   </tr>
 <% end %>
 

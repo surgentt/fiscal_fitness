@@ -50,13 +50,16 @@ $(document).ready(function(){
 	//Feedback Modal//
 
 	$('.feedbackButton').click(function() {
-		$('.feedbackModal').show();
+		$('#feedbackModal').show();
+		console.log('dfkjsa');
 	});
 
 	$('.closeFeedbackModal').click(function() {
 		$('.dumbBox').css("background-color","#fff");
-		$('.feedbackModal').hide();
+		$('#feedbackModal').hide();
 	});
+
+
 
 	/////////////////////////////////
 	//Helper Method to format money//

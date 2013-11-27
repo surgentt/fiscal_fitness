@@ -1,6 +1,6 @@
 <a href="#feedback" class="feedbackButton" id="feedback_button">Feedback</a>
 
-<div class="dumbBoxWrap feedbackModal">
+<div class="dumbBoxWrap" id="feedbackModal">
   <div class="vertical-offset">
     <div class="dumbBox">
       <button type="button" class="closeFeedbackModal">×</button>
@@ -9,17 +9,9 @@
           Feedback
         </div>
         <div id="feedback_body">
-          <%= form_for Feedback.new do |f| %>
-            <div>
-              <%= f.text_area :general, rows: 10, cols: 48, class: "feedback_general", placeholder: 'We Love detailed feedback!' %>
-            </div>
-            <div>
-              <%= f.text_field :email, class: "feedback_general", placeholder: 'Email' %>
-            </div>
-            <div class="center">
-              <%= f.submit "Submit", class: "button" %>
-            </div>
-          <% end %>
+
+        <%= render partial: "feedbacks/form", locals: { feedback: Feedback.new} %>
+
         </div>
       </div>
     </div>

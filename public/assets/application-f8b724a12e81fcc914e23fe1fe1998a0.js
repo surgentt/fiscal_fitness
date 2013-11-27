@@ -10027,7 +10027,7 @@ $(document).ready(function(){
 	$("#25twoWeeks").click(function() {
 		$('.modal').show();
 		//$('.dumbBox').css("background-color","#40E50D");
-		$('.modal_content').text('You just earned 25% interst on your money');
+		$('.modal_content').text('You just earned 25% interst on your money.');
 	});
 
 	//Slide 4 & Slide 7_1
@@ -10047,6 +10047,20 @@ $(document).ready(function(){
 		$('.modal').hide();
 	});
 
+	//Feedback Modal//
+
+	$('.feedbackButton').click(function() {
+		$('#feedbackModal').show();
+		console.log('dfkjsa');
+	});
+
+	$('.closeFeedbackModal').click(function() {
+		$('.dumbBox').css("background-color","#fff");
+		$('#feedbackModal').hide();
+	});
+
+
+
 	/////////////////////////////////
 	//Helper Method to format money//
 	/////////////////////////////////
@@ -10065,7 +10079,7 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
 
-	// console.log(d3);
+  // console.log(d3);
 
   // Prevent page from automatically reloading after submit
   $('#iRateForm').submit(function() {
@@ -10325,7 +10339,7 @@ $(document).ready(function(){
       $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Try and Save More. Notice ');
+      $('.modal_content').text('Try and Save More.');
     }
   }
 
@@ -10335,7 +10349,7 @@ $(document).ready(function(){
       $('.modal_content').text('You just saved ' + differenceString + ' Extra Income through the power of interest rates. Seems Awesome right.');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Keep trying you only earned '+ differenceString + 
+      $('.modal_content').text('Keep trying. You only earned '+ differenceString + 
         ' in extra income');
     }
   }

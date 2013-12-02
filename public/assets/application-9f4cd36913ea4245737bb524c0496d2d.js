@@ -1,3 +1,405 @@
+(function() {
+  var CSRFToken, anchoredLink, assetsChanged, browserCompatibleDocumentParser, browserIsntBuggy, browserSupportsPushState, cacheCurrentPage, changePage, constrainPageCacheTo, createDocument, crossOriginLink, currentState, executeScriptTags, extractLink, extractTitleAndBody, extractTrackAssets, fetchHistory, fetchReplacement, handleClick, ignoreClick, initializeTurbolinks, initialized, installClickHandlerLast, intersection, invalidContent, loadedAssets, noTurbolink, nonHtmlLink, nonStandardClick, pageCache, recallScrollPosition, referer, reflectNewUrl, reflectRedirectedUrl, rememberCurrentState, rememberCurrentUrl, rememberInitialPage, removeHash, removeNoscriptTags, requestMethod, requestMethodIsSafe, resetScrollPosition, targetLink, triggerEvent, visit, xhr, _ref,
+    __hasProp = {}.hasOwnProperty,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  initialized = false;
+
+  currentState = null;
+
+  referer = document.location.href;
+
+  loadedAssets = null;
+
+  pageCache = {};
+
+  createDocument = null;
+
+  requestMethod = ((_ref = document.cookie.match(/request_method=(\w+)/)) != null ? _ref[1].toUpperCase() : void 0) || '';
+
+  xhr = null;
+
+  visit = function(url) {
+    if (browserSupportsPushState && browserIsntBuggy) {
+      cacheCurrentPage();
+      reflectNewUrl(url);
+      return fetchReplacement(url);
+    } else {
+      return document.location.href = url;
+    }
+  };
+
+  fetchReplacement = function(url) {
+    var safeUrl,
+      _this = this;
+    triggerEvent('page:fetch');
+    safeUrl = removeHash(url);
+    if (xhr != null) {
+      xhr.abort();
+    }
+    xhr = new XMLHttpRequest;
+    xhr.open('GET', safeUrl, true);
+    xhr.setRequestHeader('Accept', 'text/html, application/xhtml+xml, application/xml');
+    xhr.setRequestHeader('X-XHR-Referer', referer);
+    xhr.onload = function() {
+      var doc;
+      triggerEvent('page:receive');
+      if (invalidContent(xhr) || assetsChanged((doc = createDocument(xhr.responseText)))) {
+        return document.location.reload();
+      } else {
+        changePage.apply(null, extractTitleAndBody(doc));
+        reflectRedirectedUrl(xhr);
+        if (document.location.hash) {
+          document.location.href = document.location.href;
+        } else {
+          resetScrollPosition();
+        }
+        return triggerEvent('page:load');
+      }
+    };
+    xhr.onloadend = function() {
+      return xhr = null;
+    };
+    xhr.onabort = function() {
+      return rememberCurrentUrl();
+    };
+    xhr.onerror = function() {
+      return document.location.href = url;
+    };
+    return xhr.send();
+  };
+
+  fetchHistory = function(state) {
+    var page;
+    cacheCurrentPage();
+    if (page = pageCache[state.position]) {
+      if (xhr != null) {
+        xhr.abort();
+      }
+      changePage(page.title, page.body);
+      recallScrollPosition(page);
+      return triggerEvent('page:restore');
+    } else {
+      return fetchReplacement(document.location.href);
+    }
+  };
+
+  cacheCurrentPage = function() {
+    rememberInitialPage();
+    pageCache[currentState.position] = {
+      url: document.location.href,
+      body: document.body,
+      title: document.title,
+      positionY: window.pageYOffset,
+      positionX: window.pageXOffset
+    };
+    return constrainPageCacheTo(10);
+  };
+
+  constrainPageCacheTo = function(limit) {
+    var key, value;
+    for (key in pageCache) {
+      if (!__hasProp.call(pageCache, key)) continue;
+      value = pageCache[key];
+      if (key <= currentState.position - limit) {
+        pageCache[key] = null;
+      }
+    }
+  };
+
+  changePage = function(title, body, csrfToken, runScripts) {
+    document.title = title;
+    document.documentElement.replaceChild(body, document.body);
+    if (csrfToken != null) {
+      CSRFToken.update(csrfToken);
+    }
+    removeNoscriptTags();
+    if (runScripts) {
+      executeScriptTags();
+    }
+    currentState = window.history.state;
+    return triggerEvent('page:change');
+  };
+
+  executeScriptTags = function() {
+    var attr, copy, nextSibling, parentNode, script, scripts, _i, _j, _len, _len1, _ref1, _ref2;
+    scripts = Array.prototype.slice.call(document.body.getElementsByTagName('script'));
+    for (_i = 0, _len = scripts.length; _i < _len; _i++) {
+      script = scripts[_i];
+      if (!((_ref1 = script.type) === '' || _ref1 === 'text/javascript')) {
+        continue;
+      }
+      copy = document.createElement('script');
+      _ref2 = script.attributes;
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        attr = _ref2[_j];
+        copy.setAttribute(attr.name, attr.value);
+      }
+      copy.appendChild(document.createTextNode(script.innerHTML));
+      parentNode = script.parentNode, nextSibling = script.nextSibling;
+      parentNode.removeChild(script);
+      parentNode.insertBefore(copy, nextSibling);
+    }
+  };
+
+  removeNoscriptTags = function() {
+    var noscript, noscriptTags, _i, _len;
+    noscriptTags = Array.prototype.slice.call(document.body.getElementsByTagName('noscript'));
+    for (_i = 0, _len = noscriptTags.length; _i < _len; _i++) {
+      noscript = noscriptTags[_i];
+      noscript.parentNode.removeChild(noscript);
+    }
+  };
+
+  reflectNewUrl = function(url) {
+    if (url !== document.location.href) {
+      referer = document.location.href;
+      return window.history.pushState({
+        turbolinks: true,
+        position: currentState.position + 1
+      }, '', url);
+    }
+  };
+
+  reflectRedirectedUrl = function(xhr) {
+    var location;
+    if ((location = xhr.getResponseHeader('X-XHR-Current-Location')) && location !== document.location.pathname + document.location.search) {
+      return window.history.replaceState(currentState, '', location + document.location.hash);
+    }
+  };
+
+  rememberCurrentUrl = function() {
+    return window.history.replaceState({
+      turbolinks: true,
+      position: Date.now()
+    }, '', document.location.href);
+  };
+
+  rememberCurrentState = function() {
+    return currentState = window.history.state;
+  };
+
+  rememberInitialPage = function() {
+    if (!initialized) {
+      rememberCurrentUrl();
+      rememberCurrentState();
+      createDocument = browserCompatibleDocumentParser();
+      return initialized = true;
+    }
+  };
+
+  recallScrollPosition = function(page) {
+    return window.scrollTo(page.positionX, page.positionY);
+  };
+
+  resetScrollPosition = function() {
+    return window.scrollTo(0, 0);
+  };
+
+  removeHash = function(url) {
+    var link;
+    link = url;
+    if (url.href == null) {
+      link = document.createElement('A');
+      link.href = url;
+    }
+    return link.href.replace(link.hash, '');
+  };
+
+  triggerEvent = function(name) {
+    var event;
+    event = document.createEvent('Events');
+    event.initEvent(name, true, true);
+    return document.dispatchEvent(event);
+  };
+
+  invalidContent = function(xhr) {
+    return !xhr.getResponseHeader('Content-Type').match(/^(?:text\/html|application\/xhtml\+xml|application\/xml)(?:;|$)/);
+  };
+
+  extractTrackAssets = function(doc) {
+    var node, _i, _len, _ref1, _results;
+    _ref1 = doc.head.childNodes;
+    _results = [];
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      node = _ref1[_i];
+      if ((typeof node.getAttribute === "function" ? node.getAttribute('data-turbolinks-track') : void 0) != null) {
+        _results.push(node.src || node.href);
+      }
+    }
+    return _results;
+  };
+
+  assetsChanged = function(doc) {
+    var fetchedAssets;
+    loadedAssets || (loadedAssets = extractTrackAssets(document));
+    fetchedAssets = extractTrackAssets(doc);
+    return fetchedAssets.length !== loadedAssets.length || intersection(fetchedAssets, loadedAssets).length !== loadedAssets.length;
+  };
+
+  intersection = function(a, b) {
+    var value, _i, _len, _ref1, _results;
+    if (a.length > b.length) {
+      _ref1 = [b, a], a = _ref1[0], b = _ref1[1];
+    }
+    _results = [];
+    for (_i = 0, _len = a.length; _i < _len; _i++) {
+      value = a[_i];
+      if (__indexOf.call(b, value) >= 0) {
+        _results.push(value);
+      }
+    }
+    return _results;
+  };
+
+  extractTitleAndBody = function(doc) {
+    var title;
+    title = doc.querySelector('title');
+    return [title != null ? title.textContent : void 0, doc.body, CSRFToken.get(doc).token, 'runScripts'];
+  };
+
+  CSRFToken = {
+    get: function(doc) {
+      var tag;
+      if (doc == null) {
+        doc = document;
+      }
+      return {
+        node: tag = doc.querySelector('meta[name="csrf-token"]'),
+        token: tag != null ? typeof tag.getAttribute === "function" ? tag.getAttribute('content') : void 0 : void 0
+      };
+    },
+    update: function(latest) {
+      var current;
+      current = this.get();
+      if ((current.token != null) && (latest != null) && current.token !== latest) {
+        return current.node.setAttribute('content', latest);
+      }
+    }
+  };
+
+  browserCompatibleDocumentParser = function() {
+    var createDocumentUsingDOM, createDocumentUsingParser, createDocumentUsingWrite, e, testDoc, _ref1;
+    createDocumentUsingParser = function(html) {
+      return (new DOMParser).parseFromString(html, 'text/html');
+    };
+    createDocumentUsingDOM = function(html) {
+      var doc;
+      doc = document.implementation.createHTMLDocument('');
+      doc.documentElement.innerHTML = html;
+      return doc;
+    };
+    createDocumentUsingWrite = function(html) {
+      var doc;
+      doc = document.implementation.createHTMLDocument('');
+      doc.open('replace');
+      doc.write(html);
+      doc.close();
+      return doc;
+    };
+    try {
+      if (window.DOMParser) {
+        testDoc = createDocumentUsingParser('<html><body><p>test');
+        return createDocumentUsingParser;
+      }
+    } catch (_error) {
+      e = _error;
+      testDoc = createDocumentUsingDOM('<html><body><p>test');
+      return createDocumentUsingDOM;
+    } finally {
+      if ((testDoc != null ? (_ref1 = testDoc.body) != null ? _ref1.childNodes.length : void 0 : void 0) !== 1) {
+        return createDocumentUsingWrite;
+      }
+    }
+  };
+
+  installClickHandlerLast = function(event) {
+    if (!event.defaultPrevented) {
+      document.removeEventListener('click', handleClick, false);
+      return document.addEventListener('click', handleClick, false);
+    }
+  };
+
+  handleClick = function(event) {
+    var link;
+    if (!event.defaultPrevented) {
+      link = extractLink(event);
+      if (link.nodeName === 'A' && !ignoreClick(event, link)) {
+        visit(link.href);
+        return event.preventDefault();
+      }
+    }
+  };
+
+  extractLink = function(event) {
+    var link;
+    link = event.target;
+    while (!(!link.parentNode || link.nodeName === 'A')) {
+      link = link.parentNode;
+    }
+    return link;
+  };
+
+  crossOriginLink = function(link) {
+    return location.protocol !== link.protocol || location.host !== link.host;
+  };
+
+  anchoredLink = function(link) {
+    return ((link.hash && removeHash(link)) === removeHash(location)) || (link.href === location.href + '#');
+  };
+
+  nonHtmlLink = function(link) {
+    var url;
+    url = removeHash(link);
+    return url.match(/\.[a-z]+(\?.*)?$/g) && !url.match(/\.html?(\?.*)?$/g);
+  };
+
+  noTurbolink = function(link) {
+    var ignore;
+    while (!(ignore || link === document)) {
+      ignore = link.getAttribute('data-no-turbolink') != null;
+      link = link.parentNode;
+    }
+    return ignore;
+  };
+
+  targetLink = function(link) {
+    return link.target.length !== 0;
+  };
+
+  nonStandardClick = function(event) {
+    return event.which > 1 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+  };
+
+  ignoreClick = function(event, link) {
+    return crossOriginLink(link) || anchoredLink(link) || nonHtmlLink(link) || noTurbolink(link) || targetLink(link) || nonStandardClick(event);
+  };
+
+  initializeTurbolinks = function() {
+    document.addEventListener('click', installClickHandlerLast, true);
+    return window.addEventListener('popstate', function(event) {
+      var _ref1;
+      if ((_ref1 = event.state) != null ? _ref1.turbolinks : void 0) {
+        return fetchHistory(event.state);
+      }
+    }, false);
+  };
+
+  browserSupportsPushState = window.history && window.history.pushState && window.history.replaceState && window.history.state !== void 0;
+
+  browserIsntBuggy = !navigator.userAgent.match(/CriOS\//);
+
+  requestMethodIsSafe = requestMethod === 'GET' || requestMethod === '';
+
+  if (browserSupportsPushState && browserIsntBuggy && requestMethodIsSafe) {
+    initializeTurbolinks();
+  }
+
+  this.Turbolinks = {
+    visit: visit
+  };
+
+}).call(this);
 /*!
  * jQuery JavaScript Library v1.9.1
  * http://jquery.com/
@@ -9596,757 +9998,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 }
 
 })( window );
-(function() {
-  var CSRFToken, anchoredLink, assetsChanged, browserCompatibleDocumentParser, browserIsntBuggy, browserSupportsPushState, cacheCurrentPage, changePage, constrainPageCacheTo, createDocument, crossOriginLink, currentState, executeScriptTags, extractLink, extractTitleAndBody, extractTrackAssets, fetchHistory, fetchReplacement, handleClick, ignoreClick, initializeTurbolinks, initialized, installClickHandlerLast, intersection, invalidContent, loadedAssets, noTurbolink, nonHtmlLink, nonStandardClick, pageCache, recallScrollPosition, referer, reflectNewUrl, reflectRedirectedUrl, rememberCurrentState, rememberCurrentUrl, rememberInitialPage, removeHash, removeNoscriptTags, requestMethod, requestMethodIsSafe, resetScrollPosition, targetLink, triggerEvent, visit, xhr, _ref,
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  initialized = false;
-
-  currentState = null;
-
-  referer = document.location.href;
-
-  loadedAssets = null;
-
-  pageCache = {};
-
-  createDocument = null;
-
-  requestMethod = ((_ref = document.cookie.match(/request_method=(\w+)/)) != null ? _ref[1].toUpperCase() : void 0) || '';
-
-  xhr = null;
-
-  visit = function(url) {
-    if (browserSupportsPushState && browserIsntBuggy) {
-      cacheCurrentPage();
-      reflectNewUrl(url);
-      return fetchReplacement(url);
-    } else {
-      return document.location.href = url;
-    }
-  };
-
-  fetchReplacement = function(url) {
-    var safeUrl,
-      _this = this;
-    triggerEvent('page:fetch');
-    safeUrl = removeHash(url);
-    if (xhr != null) {
-      xhr.abort();
-    }
-    xhr = new XMLHttpRequest;
-    xhr.open('GET', safeUrl, true);
-    xhr.setRequestHeader('Accept', 'text/html, application/xhtml+xml, application/xml');
-    xhr.setRequestHeader('X-XHR-Referer', referer);
-    xhr.onload = function() {
-      var doc;
-      triggerEvent('page:receive');
-      if (invalidContent(xhr) || assetsChanged((doc = createDocument(xhr.responseText)))) {
-        return document.location.reload();
-      } else {
-        changePage.apply(null, extractTitleAndBody(doc));
-        reflectRedirectedUrl(xhr);
-        if (document.location.hash) {
-          document.location.href = document.location.href;
-        } else {
-          resetScrollPosition();
-        }
-        return triggerEvent('page:load');
-      }
-    };
-    xhr.onloadend = function() {
-      return xhr = null;
-    };
-    xhr.onabort = function() {
-      return rememberCurrentUrl();
-    };
-    xhr.onerror = function() {
-      return document.location.href = url;
-    };
-    return xhr.send();
-  };
-
-  fetchHistory = function(state) {
-    var page;
-    cacheCurrentPage();
-    if (page = pageCache[state.position]) {
-      if (xhr != null) {
-        xhr.abort();
-      }
-      changePage(page.title, page.body);
-      recallScrollPosition(page);
-      return triggerEvent('page:restore');
-    } else {
-      return fetchReplacement(document.location.href);
-    }
-  };
-
-  cacheCurrentPage = function() {
-    rememberInitialPage();
-    pageCache[currentState.position] = {
-      url: document.location.href,
-      body: document.body,
-      title: document.title,
-      positionY: window.pageYOffset,
-      positionX: window.pageXOffset
-    };
-    return constrainPageCacheTo(10);
-  };
-
-  constrainPageCacheTo = function(limit) {
-    var key, value;
-    for (key in pageCache) {
-      if (!__hasProp.call(pageCache, key)) continue;
-      value = pageCache[key];
-      if (key <= currentState.position - limit) {
-        pageCache[key] = null;
-      }
-    }
-  };
-
-  changePage = function(title, body, csrfToken, runScripts) {
-    document.title = title;
-    document.documentElement.replaceChild(body, document.body);
-    if (csrfToken != null) {
-      CSRFToken.update(csrfToken);
-    }
-    removeNoscriptTags();
-    if (runScripts) {
-      executeScriptTags();
-    }
-    currentState = window.history.state;
-    return triggerEvent('page:change');
-  };
-
-  executeScriptTags = function() {
-    var attr, copy, nextSibling, parentNode, script, scripts, _i, _j, _len, _len1, _ref1, _ref2;
-    scripts = Array.prototype.slice.call(document.body.getElementsByTagName('script'));
-    for (_i = 0, _len = scripts.length; _i < _len; _i++) {
-      script = scripts[_i];
-      if (!((_ref1 = script.type) === '' || _ref1 === 'text/javascript')) {
-        continue;
-      }
-      copy = document.createElement('script');
-      _ref2 = script.attributes;
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        attr = _ref2[_j];
-        copy.setAttribute(attr.name, attr.value);
-      }
-      copy.appendChild(document.createTextNode(script.innerHTML));
-      parentNode = script.parentNode, nextSibling = script.nextSibling;
-      parentNode.removeChild(script);
-      parentNode.insertBefore(copy, nextSibling);
-    }
-  };
-
-  removeNoscriptTags = function() {
-    var noscript, noscriptTags, _i, _len;
-    noscriptTags = Array.prototype.slice.call(document.body.getElementsByTagName('noscript'));
-    for (_i = 0, _len = noscriptTags.length; _i < _len; _i++) {
-      noscript = noscriptTags[_i];
-      noscript.parentNode.removeChild(noscript);
-    }
-  };
-
-  reflectNewUrl = function(url) {
-    if (url !== document.location.href) {
-      referer = document.location.href;
-      return window.history.pushState({
-        turbolinks: true,
-        position: currentState.position + 1
-      }, '', url);
-    }
-  };
-
-  reflectRedirectedUrl = function(xhr) {
-    var location;
-    if ((location = xhr.getResponseHeader('X-XHR-Current-Location')) && location !== document.location.pathname + document.location.search) {
-      return window.history.replaceState(currentState, '', location + document.location.hash);
-    }
-  };
-
-  rememberCurrentUrl = function() {
-    return window.history.replaceState({
-      turbolinks: true,
-      position: Date.now()
-    }, '', document.location.href);
-  };
-
-  rememberCurrentState = function() {
-    return currentState = window.history.state;
-  };
-
-  rememberInitialPage = function() {
-    if (!initialized) {
-      rememberCurrentUrl();
-      rememberCurrentState();
-      createDocument = browserCompatibleDocumentParser();
-      return initialized = true;
-    }
-  };
-
-  recallScrollPosition = function(page) {
-    return window.scrollTo(page.positionX, page.positionY);
-  };
-
-  resetScrollPosition = function() {
-    return window.scrollTo(0, 0);
-  };
-
-  removeHash = function(url) {
-    var link;
-    link = url;
-    if (url.href == null) {
-      link = document.createElement('A');
-      link.href = url;
-    }
-    return link.href.replace(link.hash, '');
-  };
-
-  triggerEvent = function(name) {
-    var event;
-    event = document.createEvent('Events');
-    event.initEvent(name, true, true);
-    return document.dispatchEvent(event);
-  };
-
-  invalidContent = function(xhr) {
-    return !xhr.getResponseHeader('Content-Type').match(/^(?:text\/html|application\/xhtml\+xml|application\/xml)(?:;|$)/);
-  };
-
-  extractTrackAssets = function(doc) {
-    var node, _i, _len, _ref1, _results;
-    _ref1 = doc.head.childNodes;
-    _results = [];
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      node = _ref1[_i];
-      if ((typeof node.getAttribute === "function" ? node.getAttribute('data-turbolinks-track') : void 0) != null) {
-        _results.push(node.src || node.href);
-      }
-    }
-    return _results;
-  };
-
-  assetsChanged = function(doc) {
-    var fetchedAssets;
-    loadedAssets || (loadedAssets = extractTrackAssets(document));
-    fetchedAssets = extractTrackAssets(doc);
-    return fetchedAssets.length !== loadedAssets.length || intersection(fetchedAssets, loadedAssets).length !== loadedAssets.length;
-  };
-
-  intersection = function(a, b) {
-    var value, _i, _len, _ref1, _results;
-    if (a.length > b.length) {
-      _ref1 = [b, a], a = _ref1[0], b = _ref1[1];
-    }
-    _results = [];
-    for (_i = 0, _len = a.length; _i < _len; _i++) {
-      value = a[_i];
-      if (__indexOf.call(b, value) >= 0) {
-        _results.push(value);
-      }
-    }
-    return _results;
-  };
-
-  extractTitleAndBody = function(doc) {
-    var title;
-    title = doc.querySelector('title');
-    return [title != null ? title.textContent : void 0, doc.body, CSRFToken.get(doc).token, 'runScripts'];
-  };
-
-  CSRFToken = {
-    get: function(doc) {
-      var tag;
-      if (doc == null) {
-        doc = document;
-      }
-      return {
-        node: tag = doc.querySelector('meta[name="csrf-token"]'),
-        token: tag != null ? typeof tag.getAttribute === "function" ? tag.getAttribute('content') : void 0 : void 0
-      };
-    },
-    update: function(latest) {
-      var current;
-      current = this.get();
-      if ((current.token != null) && (latest != null) && current.token !== latest) {
-        return current.node.setAttribute('content', latest);
-      }
-    }
-  };
-
-  browserCompatibleDocumentParser = function() {
-    var createDocumentUsingDOM, createDocumentUsingParser, createDocumentUsingWrite, e, testDoc, _ref1;
-    createDocumentUsingParser = function(html) {
-      return (new DOMParser).parseFromString(html, 'text/html');
-    };
-    createDocumentUsingDOM = function(html) {
-      var doc;
-      doc = document.implementation.createHTMLDocument('');
-      doc.documentElement.innerHTML = html;
-      return doc;
-    };
-    createDocumentUsingWrite = function(html) {
-      var doc;
-      doc = document.implementation.createHTMLDocument('');
-      doc.open('replace');
-      doc.write(html);
-      doc.close();
-      return doc;
-    };
-    try {
-      if (window.DOMParser) {
-        testDoc = createDocumentUsingParser('<html><body><p>test');
-        return createDocumentUsingParser;
-      }
-    } catch (_error) {
-      e = _error;
-      testDoc = createDocumentUsingDOM('<html><body><p>test');
-      return createDocumentUsingDOM;
-    } finally {
-      if ((testDoc != null ? (_ref1 = testDoc.body) != null ? _ref1.childNodes.length : void 0 : void 0) !== 1) {
-        return createDocumentUsingWrite;
-      }
-    }
-  };
-
-  installClickHandlerLast = function(event) {
-    if (!event.defaultPrevented) {
-      document.removeEventListener('click', handleClick, false);
-      return document.addEventListener('click', handleClick, false);
-    }
-  };
-
-  handleClick = function(event) {
-    var link;
-    if (!event.defaultPrevented) {
-      link = extractLink(event);
-      if (link.nodeName === 'A' && !ignoreClick(event, link)) {
-        visit(link.href);
-        return event.preventDefault();
-      }
-    }
-  };
-
-  extractLink = function(event) {
-    var link;
-    link = event.target;
-    while (!(!link.parentNode || link.nodeName === 'A')) {
-      link = link.parentNode;
-    }
-    return link;
-  };
-
-  crossOriginLink = function(link) {
-    return location.protocol !== link.protocol || location.host !== link.host;
-  };
-
-  anchoredLink = function(link) {
-    return ((link.hash && removeHash(link)) === removeHash(location)) || (link.href === location.href + '#');
-  };
-
-  nonHtmlLink = function(link) {
-    var url;
-    url = removeHash(link);
-    return url.match(/\.[a-z]+(\?.*)?$/g) && !url.match(/\.html?(\?.*)?$/g);
-  };
-
-  noTurbolink = function(link) {
-    var ignore;
-    while (!(ignore || link === document)) {
-      ignore = link.getAttribute('data-no-turbolink') != null;
-      link = link.parentNode;
-    }
-    return ignore;
-  };
-
-  targetLink = function(link) {
-    return link.target.length !== 0;
-  };
-
-  nonStandardClick = function(event) {
-    return event.which > 1 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-  };
-
-  ignoreClick = function(event, link) {
-    return crossOriginLink(link) || anchoredLink(link) || nonHtmlLink(link) || noTurbolink(link) || targetLink(link) || nonStandardClick(event);
-  };
-
-  initializeTurbolinks = function() {
-    document.addEventListener('click', installClickHandlerLast, true);
-    return window.addEventListener('popstate', function(event) {
-      var _ref1;
-      if ((_ref1 = event.state) != null ? _ref1.turbolinks : void 0) {
-        return fetchHistory(event.state);
-      }
-    }, false);
-  };
-
-  browserSupportsPushState = window.history && window.history.pushState && window.history.replaceState && window.history.state !== void 0;
-
-  browserIsntBuggy = !navigator.userAgent.match(/CriOS\//);
-
-  requestMethodIsSafe = requestMethod === 'GET' || requestMethod === '';
-
-  if (browserSupportsPushState && browserIsntBuggy && requestMethodIsSafe) {
-    initializeTurbolinks();
-  }
-
-  this.Turbolinks = {
-    visit: visit
-  };
-
-}).call(this);
-$(document).ready(function(){
-
-	//Speed at which a new slide appears
-	$('#slide').hide().fadeIn(1000);
-
-	/////////////////////////
-	//Answer's to Questions//
-	/////////////////////////
-
-	//Slide 2 Questions
-	$("#aDollarToday").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('Sure who wouldn\'t');
-	});
-
-	$("#aDollarTomorrow").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('That doesn\'t make much sense.');
-	});
-
-	$("#20today").click(function() {
-		$('.modal').show();
-		//$('.dumbBox').css("background-color","#FF2621");
-		$('.modal_content').text('You didn\'t earn any interest.');
-	});
-
-	$("#25twoWeeks").click(function() {
-		$('.modal').show();
-		//$('.dumbBox').css("background-color","#40E50D");
-		$('.modal_content').text('You just earned 25% interst on your money.');
-	});
-
-	//Slide 4 & Slide 7_1
-	$("#Higher").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('Correct');
-	});
-
-	$("#Lower").click(function() {
-		$('.modal').show();
-		$('.modal_content').text('Incorrect');
-	});
-
-	//Close Any Modal
-	$('.close').click(function() {
-		$('.dumbBox').css("background-color","#fff");
-		$('.modal').hide();
-	});
-
-	$('.closeFeedbackModal').click(function()) {
-		$('.dumbBox').css("background-color","#fff");
-		$('.feedbackModal').hide();
-	});
-
-	/////////////////////////////////
-	//Helper Method to format money//
-	/////////////////////////////////
-
-	Number.prototype.formatMoney = function(c, d, t){
-  	var n = this, 
-    c = isNaN(c = Math.abs(c)) ? 2 : c, 
-    d = d == undefined ? "." : d, 
-    t = t == undefined ? "," : t, 
-    s = n < 0 ? "-" : "", 
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
-    j = (j = i.length) > 3 ? j % 3 : 0;
-   	return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-	};
-
-});
-$(document).ready(function(){
-
-	// console.log(d3);
-
-  // Prevent page from automatically reloading after submit
-  $('#iRateForm').submit(function() {
-    return false;
-  });
-
-	//Run Code on Click of id="how Much"
-  $("#howMuch").click(function (ev) {
-    ev.preventDefault();
-    var numOfPeriods = 0;
-    //Validates for empty code only. 
-    //Loop through all the required fields. If any are blank jump out
-    //http://stackoverflow.com/questions/20082915/jquery-required-fields-loop-based-on-css-class
-    $('.required').each(function() {
-      if($(this).val().length == 0) {
-        $('.modal').show();
-        $('.modal_content').text('Please fill in the Required Fields');
-        return false;
-      } else {
-        clearGraph();
-        //Adjust the number of periods from years to month
-        numOfPeriods = yearToMonthAdj();
-
-        // Change function that is run, depending on what the body of the page is named
-        if($('div.withoutInterest')[0]) {
-          var futureValue = createiRateGraphNoInterest(numOfPeriods);
-          testFVforMillionaire(futureValue);
-        } else if ($('div.withInterest')[0]) {
-          var futureValue = createiRateGraph(numOfPeriods);
-          testFVforEarnings(futureValue);
-        } else if ($('div.bothInterest')[0]) {
-          var futureValue = createBoth(numOfPeriods);
-          testExtraIncome(extraIncome);
-        }
-      }
-    });
-  });
-
-  function clearGraph() {
-    $('#y_axis').empty();
-    $('#x_axis').empty();
-    $('#chart').empty();
-  }
-
-  function yearToMonthAdj() {
-		//Adjust the num of years to Monthly PMT
-    //$('#iRateForm').val() === 'Years'
-    var periods =  $('#numOfPeriods').val();
-
-    if($('#yearOrMonth').val() == 'y') {
-      //Multiply the value by 12
-      return periods * 12;
-    } else {
-      //Month in selected, no calculations needed
-      return periods;
-    }
-  }
-
-  function runFvNoInterest(numOfPeriods, pmt) {
-		var futureValue       = 0;
-    var futureValueString = "0";
-    //When Initital Run, numOfPeriods is passed in. 
-    futureValue = pmt*numOfPeriods;
-  
-    return futureValue;
-  }
-
-  function runFVOrdinaryAnnuity(numOfPeriods, pmt, interest) {
-    var factor = 0;
-    var futureValue = 0;
-    var futureValueString = "0";
-    
-    //fv = pmt*[(((1+i)^n)-1/i)]
-    factor = ((Math.pow((1+interest),numOfPeriods))-1)/interest;
-    futureValue = pmt * factor;
-    
-    return futureValue;
-  }
-
-  function createiRateGraphNoInterest(numOfPeriods) {
-    //Declare an empty array to pass data into
-    var data = [];
-    var futureValue = 0;
-    var pmt = $('#pmt').val()
-    for(var index = 0; index <= numOfPeriods; index++) {
-      //Instead of passing in numOfPeriods, index is passed into runFvNoInterest)
-      futureValue = runFvNoInterest(index, pmt);
-      data.push({ x: index, y: futureValue});
-    }
-    console.log(data);
-    // Create a new Rickshaw Graph
-    var graph = new Rickshaw.Graph( {
-      element: document.querySelector("#chart"), 
-      //Automatically Scale to window size
-      width: 500,
-      height: 210,
-      series: [{
-        name:  'Total Savings',
-        color: 'steelblue',
-        data: data
-      }]
-    });
-
-    var x_axis = new Rickshaw.Graph.Axis.X( { 
-      graph: graph,
-      element: document.getElementById('x_axis')
-    });
-
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
-      graph: graph,
-      orientation: 'left',
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: document.getElementById('y_axis'),
-    });
-
-    graph.render();
-
-    futureValueString = "$" + futureValue.formatMoney(2);
-    $('#total').val(futureValueString);
-
-    return futureValue;
-  }
-
-  function createiRateGraph(numOfPeriods) {
-    //Declare an empty array to pass data into
-    var data = [];
-    var interest = $('#interest').val()/100/12;
-    var pmt = $('#pmt').val()
-
-    //Declare a variable index; Pass in months; Increment by one month on each loop
-    for(var index = 0; index <= numOfPeriods; index++) {
-      //Instead of passing in numOfPeriods, index is passed into runFvNoInterest)
-      futureValue = runFVOrdinaryAnnuity(index, pmt, interest);
-      data.push({ x: index, y: futureValue });
-    }
-    console.log(data);
-    // Create a new Rickshaw Graph
-    var graph = new Rickshaw.Graph( {
-      element: document.querySelector("#chart"), 
-      //Automatically Scale to Window Size
-      width: 500,
-      height: 210,
-      series: [{
-        name: 'Savings with Interest',
-        color: 'lightblue',
-        data: data
-      }]
-    });
-
-    var x_axis = new Rickshaw.Graph.Axis.X( { 
-      graph: graph,
-      element: document.getElementById('x_axis')
-    });
-
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
-      graph: graph,
-      orientation: 'left',
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: document.getElementById('y_axis'),
-    });
-
-    graph.render();
-
-    futureValueString = "$" + futureValue.formatMoney(2);
-    $('#total').val(futureValueString);
-
-    return futureValue;
-  }
-
-  function createBoth(numOfPeriods) {
-    var dataA = [];
-    var dataB = [];
-
-    var interest = $('#interest').val()/100/12;
-    var pmt = $('#pmt').val()
-
-    for(var index = 0; index <= numOfPeriods; index++) {
-      futureValueA = runFvNoInterest(index, pmt);
-      dataA.push({ x: index, y: futureValueA });
-
-      futureValueB = runFVOrdinaryAnnuity(index, pmt, interest);
-      dataB.push({ x: index, y: futureValueB });
-    }
-
-    console.log(dataA);
-    console.log(dataB);
-    // Create a new Rickshaw Graph
-    var graph = new Rickshaw.Graph( {
-      //Automatically Scale to Window Size
-      width: 500,
-      height: 210,
-      element: document.querySelector("#chart"), 
-      renderer: 'area',
-      stroke: true,
-      series: [ {
-        name: "No Interest",
-        data: dataA,
-        color: 'steelblue',
-      }, {    
-        name: "Interest",
-        data: dataB,
-        color: 'lightblue',
-      } ]    
-    });
-
-    var x_axis = new Rickshaw.Graph.Axis.X( { 
-      graph: graph,
-      element: document.getElementById('x_axis')
-    });
-
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
-      graph: graph,
-      orientation: 'left',
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: document.getElementById('y_axis'),
-    });
-
-    //var legend = new Rickshaw.Graph.Legend( {
-    //    element: document.querySelector('#legend'),
-    //    graph: graph
-    //});
-
-    graph.render();
-
-    // We look for the total savings of just the Future Value of B
-    futureValueInterestString = "$" + futureValueB.formatMoney(2);
-    $('#totalInterest').val(futureValueInterestString);
-
-    futureValueNoInterestString = "$" + futureValueA.formatMoney(2);
-    $('#totalNoInterest').val(futureValueNoInterestString);
-
-    extraIncome = futureValueB - futureValueA
-    differenceString = "$" + (extraIncome).formatMoney(2);
-    $('#difference').val(differenceString);
-
-    return extraIncome;
-  }
-
-  ///////////////////////////////////
-  //Results of the Exercies / Goal //
-  ///////////////////////////////////
-
-
-  function testFVforMillionaire(futureValue) {
-    if (futureValue > 1000000) {
-      $('.modal').show();
-      $('.modal_content').text('Your a Millionaire, but wasn\'t that pretty hard');
-    } else {
-      $('.modal').show();
-      $('.modal_content').text('Keeping trying! You\'re not a millionaire yet.');
-    }
-  }
-
-  function testFVforEarnings(futureValue) {
-    if (futureValue > 1000000) {
-      $('.modal').show();
-      $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
-    } else {
-      $('.modal').show();
-      $('.modal_content').text('Try and Save More.');
-    }
-  }
-
-  function testExtraIncome(extraIncome) {
-    if (extraIncome > 100000) {
-      $('.modal').show();
-      $('.modal_content').text('You just saved ' + differenceString + ' Extra Income through the power of interest rates. Seems Awesome right.');
-    } else {
-      $('.modal').show();
-      $('.modal_content').text('Keep trying you only earned '+ differenceString + 
-        ' in extra income');
-    }
-  }
-
-
-});
 d3 = function() {
   var d3 = {
     version: "3.3.6"
@@ -22861,6 +22512,364 @@ Rickshaw.Series.FixedDuration = Rickshaw.Class.create(Rickshaw.Series, {
 	}
 } );
 
+$(document).ready(function(){
+
+	//Speed at which a new slide appears
+	$('#slide').hide().fadeIn(1000);
+
+	/////////////////////////
+	//Answer's to Questions//
+	/////////////////////////
+
+	//Slide 2 Questions
+	$("#aDollarToday").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('Sure who wouldn\'t');
+	});
+
+	$("#aDollarTomorrow").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('That doesn\'t make much sense.');
+	});
+
+	$("#20today").click(function() {
+		$('.modal').show();
+		//$('.dumbBox').css("background-color","#FF2621");
+		$('.modal_content').text('You didn\'t earn any interest.');
+	});
+
+	$("#25twoWeeks").click(function() {
+		$('.modal').show();
+		//$('.dumbBox').css("background-color","#40E50D");
+		$('.modal_content').text('You just earned 25% interst on your money.');
+	});
+
+	//Slide 4 & Slide 7_1
+	$("#Higher").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('Correct');
+	});
+
+	$("#Lower").click(function() {
+		$('.modal').show();
+		$('.modal_content').text('Incorrect');
+	});
+
+	//Close Any Modal
+	$('.close').click(function() {
+		$('.dumbBox').css("background-color","#fff");
+		$('.modal').hide();
+	});
+
+	//Feedback Modal//
+
+	$('.feedbackButton').click(function() {
+		$('#feedbackModal').show();
+		console.log('dfkjsa');
+	});
+
+	$('.closeFeedbackModal').click(function() {
+		$('.dumbBox').css("background-color","#fff");
+		$('#feedbackModal').hide();
+	});
+
+
+
+	/////////////////////////////////
+	//Helper Method to format money//
+	/////////////////////////////////
+
+	Number.prototype.formatMoney = function(c, d, t){
+  	var n = this, 
+    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    d = d == undefined ? "." : d, 
+    t = t == undefined ? "," : t, 
+    s = n < 0 ? "-" : "", 
+    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+    j = (j = i.length) > 3 ? j % 3 : 0;
+   	return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	};
+
+});
+$(document).ready(function(){
+
+  // console.log(d3);
+
+  // Prevent page from automatically reloading after submit
+  $('#iRateForm').submit(function() {
+    return false;
+  });
+
+	//Run Code on Click of id="how Much"
+  $("#howMuch").click(function (ev) {
+    ev.preventDefault();
+    var numOfPeriods = 0;
+    //Validates for empty code only. 
+    //Loop through all the required fields. If any are blank jump out
+    //http://stackoverflow.com/questions/20082915/jquery-required-fields-loop-based-on-css-class
+    $('.required').each(function() {
+      if($(this).val().length == 0) {
+        $('.modal').show();
+        $('.modal_content').text('Please fill in the Required Fields');
+        return false;
+      } else {
+        clearGraph();
+        //Adjust the number of periods from years to month
+        numOfPeriods = yearToMonthAdj();
+
+        // Change function that is run, depending on what the body of the page is named
+        if($('div.withoutInterest')[0]) {
+          var futureValue = createiRateGraphNoInterest(numOfPeriods);
+          testFVforMillionaire(futureValue);
+        } else if ($('div.withInterest')[0]) {
+          var futureValue = createiRateGraph(numOfPeriods);
+          testFVforEarnings(futureValue);
+        } else if ($('div.bothInterest')[0]) {
+          var futureValue = createBoth(numOfPeriods);
+          testExtraIncome(extraIncome);
+        }
+      }
+    });
+  });
+
+  function clearGraph() {
+    $('#y_axis').empty();
+    $('#x_axis').empty();
+    $('#chart').empty();
+  }
+
+  function yearToMonthAdj() {
+		//Adjust the num of years to Monthly PMT
+    //$('#iRateForm').val() === 'Years'
+    var periods =  $('#numOfPeriods').val();
+
+    if($('#yearOrMonth').val() == 'y') {
+      //Multiply the value by 12
+      return periods * 12;
+    } else {
+      //Month in selected, no calculations needed
+      return periods;
+    }
+  }
+
+  function runFvNoInterest(numOfPeriods, pmt) {
+		var futureValue       = 0;
+    var futureValueString = "0";
+    //When Initital Run, numOfPeriods is passed in. 
+    futureValue = pmt*numOfPeriods;
+  
+    return futureValue;
+  }
+
+  function runFVOrdinaryAnnuity(numOfPeriods, pmt, interest) {
+    var factor = 0;
+    var futureValue = 0;
+    var futureValueString = "0";
+    
+    //fv = pmt*[(((1+i)^n)-1/i)]
+    factor = ((Math.pow((1+interest),numOfPeriods))-1)/interest;
+    futureValue = pmt * factor;
+    
+    return futureValue;
+  }
+
+  function createiRateGraphNoInterest(numOfPeriods) {
+    //Declare an empty array to pass data into
+    var data = [];
+    var futureValue = 0;
+    var pmt = $('#pmt').val()
+    for(var index = 0; index <= numOfPeriods; index++) {
+      //Instead of passing in numOfPeriods, index is passed into runFvNoInterest)
+      futureValue = runFvNoInterest(index, pmt);
+      data.push({ x: index, y: futureValue});
+    }
+    console.log(data);
+    // Create a new Rickshaw Graph
+    var graph = new Rickshaw.Graph( {
+      element: document.querySelector("#chart"), 
+      //Automatically Scale to window size
+      width: 500,
+      height: 210,
+      series: [{
+        name:  'Total Savings',
+        color: 'steelblue',
+        data: data
+      }]
+    });
+
+    var x_axis = new Rickshaw.Graph.Axis.X( { 
+      graph: graph,
+      element: document.getElementById('x_axis')
+    });
+
+    var y_axis = new Rickshaw.Graph.Axis.Y( {
+      graph: graph,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: document.getElementById('y_axis'),
+    });
+
+    graph.render();
+
+    futureValueString = "$" + futureValue.formatMoney(2);
+    $('#total').val(futureValueString);
+
+    return futureValue;
+  }
+
+  function createiRateGraph(numOfPeriods) {
+    //Declare an empty array to pass data into
+    var data = [];
+    var interest = $('#interest').val()/100/12;
+    var pmt = $('#pmt').val()
+
+    //Declare a variable index; Pass in months; Increment by one month on each loop
+    for(var index = 0; index <= numOfPeriods; index++) {
+      //Instead of passing in numOfPeriods, index is passed into runFvNoInterest)
+      futureValue = runFVOrdinaryAnnuity(index, pmt, interest);
+      data.push({ x: index, y: futureValue });
+    }
+    console.log(data);
+    // Create a new Rickshaw Graph
+    var graph = new Rickshaw.Graph( {
+      element: document.querySelector("#chart"), 
+      //Automatically Scale to Window Size
+      width: 500,
+      height: 210,
+      series: [{
+        name: 'Savings with Interest',
+        color: 'lightblue',
+        data: data
+      }]
+    });
+
+    var x_axis = new Rickshaw.Graph.Axis.X( { 
+      graph: graph,
+      element: document.getElementById('x_axis')
+    });
+
+    var y_axis = new Rickshaw.Graph.Axis.Y( {
+      graph: graph,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: document.getElementById('y_axis'),
+    });
+
+    graph.render();
+
+    futureValueString = "$" + futureValue.formatMoney(2);
+    $('#total').val(futureValueString);
+
+    return futureValue;
+  }
+
+  function createBoth(numOfPeriods) {
+    var dataA = [];
+    var dataB = [];
+
+    var interest = $('#interest').val()/100/12;
+    var pmt = $('#pmt').val()
+
+    for(var index = 0; index <= numOfPeriods; index++) {
+      futureValueA = runFvNoInterest(index, pmt);
+      dataA.push({ x: index, y: futureValueA });
+
+      futureValueB = runFVOrdinaryAnnuity(index, pmt, interest);
+      dataB.push({ x: index, y: futureValueB });
+    }
+
+    console.log(dataA);
+    console.log(dataB);
+    // Create a new Rickshaw Graph
+    var graph = new Rickshaw.Graph( {
+      //Automatically Scale to Window Size
+      width: 500,
+      height: 210,
+      element: document.querySelector("#chart"), 
+      renderer: 'area',
+      stroke: true,
+      series: [ {
+        name: "No Interest",
+        data: dataA,
+        color: 'steelblue',
+      }, {    
+        name: "Interest",
+        data: dataB,
+        color: 'lightblue',
+      } ]    
+    });
+
+    var x_axis = new Rickshaw.Graph.Axis.X( { 
+      graph: graph,
+      element: document.getElementById('x_axis')
+    });
+
+    var y_axis = new Rickshaw.Graph.Axis.Y( {
+      graph: graph,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: document.getElementById('y_axis'),
+    });
+
+    //var legend = new Rickshaw.Graph.Legend( {
+    //    element: document.querySelector('#legend'),
+    //    graph: graph
+    //});
+
+    graph.render();
+
+    // We look for the total savings of just the Future Value of B
+    futureValueInterestString = "$" + futureValueB.formatMoney(2);
+    $('#totalInterest').val(futureValueInterestString);
+
+    futureValueNoInterestString = "$" + futureValueA.formatMoney(2);
+    $('#totalNoInterest').val(futureValueNoInterestString);
+
+    extraIncome = futureValueB - futureValueA
+    differenceString = "$" + (extraIncome).formatMoney(2);
+    $('#difference').val(differenceString);
+
+    return extraIncome;
+  }
+
+  ///////////////////////////////////
+  //Results of the Exercies / Goal //
+  ///////////////////////////////////
+
+
+  function testFVforMillionaire(futureValue) {
+    if (futureValue > 1000000) {
+      $('.modal').show();
+      $('.modal_content').text('Your a Millionaire, but wasn\'t that pretty hard');
+    } else {
+      $('.modal').show();
+      $('.modal_content').text('Keeping trying! You\'re not a millionaire yet.');
+    }
+  }
+
+  function testFVforEarnings(futureValue) {
+    if (futureValue > 1000000) {
+      $('.modal').show();
+      $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
+    } else {
+      $('.modal').show();
+      $('.modal_content').text('Try and Save More.');
+    }
+  }
+
+  function testExtraIncome(extraIncome) {
+    if (extraIncome > 100000) {
+      $('.modal').show();
+      $('.modal_content').text('You just saved ' + differenceString + ' Extra Income through the power of interest rates. Seems Awesome right.');
+    } else {
+      $('.modal').show();
+      $('.modal_content').text('Keep trying. You only earned '+ differenceString + 
+        ' in extra income');
+    }
+  }
+
+
+});
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -22873,8 +22882,6 @@ Rickshaw.Series.FixedDuration = Rickshaw.Class.create(Rickshaw.Series, {
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-
-
 
 
 

@@ -12,8 +12,8 @@ FiscalFitness::Application.routes.draw do
 
   resources :interest_rates
   #Interest Rates Course Routes, There must be an easier way to do this
-  match '/slide1',  to: 'interest_rates#slide1', via: 'get'
-  match '/slide2',  to: 'interest_rates#slide2', via: 'get'
+  match '/slide/1',  to: 'interest_rates#slide1', via: 'get'
+  match '/slide/2',  to: 'interest_rates#slide2', via: 'get'
   match '/slide3',  to: 'interest_rates#slide3', via: 'get'
   match '/slide4',  to: 'interest_rates#slide4', via: 'get'
   match '/slide5',  to: 'interest_rates#slide5', via: 'get'

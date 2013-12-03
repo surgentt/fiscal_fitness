@@ -49,12 +49,12 @@ $(document).ready(function(){
 
 	//Feedback Modal//
 
-	$('.feedbackButton').click(function() {
+	//This method of clicking function seems better
+	$('.feedbackButton').on('click', function() {
 		$('#feedbackModal').show();
-		console.log('dfkjsa');
 	});
 
-	$('.closeFeedbackModal').click(function() {
+	$('.closeFeedbackModal').on('click', function() {
 		$('.dumbBox').css("background-color","#fff");
 		$('#feedbackModal').hide();
 	});

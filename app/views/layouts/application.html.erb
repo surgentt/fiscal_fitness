@@ -3,13 +3,11 @@
 	<head>
 	  <title><%= full_title(yield(:title)) %></title>  
 	  <%= stylesheet_link_tag "application", media: "all" %>
-	  <%= javascript_include_tag "application" %>
 	  <%= csrf_meta_tags %>
 	  <%= render 'layouts/shim' %>	
 	</head>
-
-	<!-- Render SCSS specific Controller -->
 	<body>
+	<%= javascript_include_tag "application" %>
 	<%= render 'layouts/feedback' %>
 	<%= render 'layouts/header' %>
 	  <div class="container">

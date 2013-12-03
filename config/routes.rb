@@ -5,23 +5,23 @@ FiscalFitness::Application.routes.draw do
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/emails', to: 'users#index',           via: 'get'
+  match '/emails',  to: 'users#index',           via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
 
   resources :interest_rates
   #Interest Rates Course Routes, There must be an easier way to do this
-  match '/slide/1',  to: 'interest_rates#slide1', via: 'get'
-  match '/slide/2',  to: 'interest_rates#slide2', via: 'get'
-  match '/slide3',  to: 'interest_rates#slide3', via: 'get'
+  match '/slide1',  to: 'interest_rates#slide1', via: 'get'
+  match '/slide2',  to: 'interest_rates#slide2', via: 'get'
+  match '/slide3',  to: 'interest_rates#slide3', via: [:get, :post]
   match '/slide4',  to: 'interest_rates#slide4', via: 'get'
   match '/slide5',  to: 'interest_rates#slide5', via: 'get'
   match '/slide6',  to: 'interest_rates#slide6', via: 'get'
   match '/slide7',  to: 'interest_rates#slide7', via: 'get'
   match '/slide8',  to: 'interest_rates#slide8', via: 'get'
   match '/slide9',  to: 'interest_rates#slide9', via: 'get'
-  match '/slide10',  to: 'interest_rates#slide10', via: 'get'
+  match '/slide10', to: 'interest_rates#slide10', via: 'get'
 
   resources :feedbacks
 

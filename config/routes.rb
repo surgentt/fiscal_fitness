@@ -12,16 +12,16 @@ FiscalFitness::Application.routes.draw do
 
   resources :interest_rates
   #Interest Rates Course Routes, There must be an easier way to do this
-  match '/slide1',  to: 'interest_rates#slide1', via: 'get'
-  match '/slide2',  to: 'interest_rates#slide2', via: 'get'
+  match '/slide1',  to: 'interest_rates#slide1', via: [:get, :post]
+  match '/slide2',  to: 'interest_rates#slide2', via: [:get, :post]
   match '/slide3',  to: 'interest_rates#slide3', via: [:get, :post]
-  match '/slide4',  to: 'interest_rates#slide4', via: 'get'
-  match '/slide5',  to: 'interest_rates#slide5', via: 'get'
-  match '/slide6',  to: 'interest_rates#slide6', via: 'get'
-  match '/slide7',  to: 'interest_rates#slide7', via: 'get'
-  match '/slide8',  to: 'interest_rates#slide8', via: 'get'
-  match '/slide9',  to: 'interest_rates#slide9', via: 'get'
-  match '/slide10', to: 'interest_rates#slide10', via: 'get'
+  match '/slide4',  to: 'interest_rates#slide4', via: [:get, :post]
+  match '/slide5',  to: 'interest_rates#slide5', via: [:get, :post]
+  match '/slide6',  to: 'interest_rates#slide6', via: [:get, :post]
+  match '/slide7',  to: 'interest_rates#slide7', via: [:get, :post]
+  match '/slide8',  to: 'interest_rates#slide8', via: [:get, :post]
+  match '/slide9',  to: 'interest_rates#slide9', via: [:get, :post]
+  match '/slide10', to: 'interest_rates#slide10', via: [:get, :post]
 
   resources :feedbacks
 

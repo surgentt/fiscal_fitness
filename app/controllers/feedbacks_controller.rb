@@ -11,7 +11,7 @@ class FeedbacksController < ApplicationController
 		@feedback = Feedback.new(feedback_params)
 	    if @feedback.save
 	      #sign_in @user
-	    	flash[:success] = "Thank you for the Feedback"
+	    	flash[:success] = "Thank you for the Feedback!"
 	      redirect_to :back
 	    else
 	      redirect_to :back

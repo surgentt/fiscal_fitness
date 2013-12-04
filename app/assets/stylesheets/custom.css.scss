@@ -7,6 +7,7 @@ $black: #000000;
 $shadow: #28261f;
 $green: #008000;
 $button-green: #42ab18;
+$button-red: #ab1842;
 $dark-red: #691616;
 $main-background: #FFFFFF;
 
@@ -104,6 +105,7 @@ table td, th {
 
 .container {
   clear: both;
+  margin: 0 auto;
 }
 
 .wrapper {
@@ -348,5 +350,42 @@ input.feedback_general {
     border-top-color: darken($button-green, 1%);
     background: darken($button-green, 1%);
   }
+
+  &.bad {
+    border-top: 1px solid lighten($button-red, 12%);
+    background: $button-red;
+    background: -webkit-gradient(linear, left top, left bottom, from(lighten($button-red, 8%)), to($button-red));
+    background: -webkit-linear-gradient(top, lighten($button-red, 8%), $button-red);
+    background: -moz-linear-gradient(top, lighten($button-red, 8%), $button-red);
+    background: -ms-linear-gradient(top, lighten($button-red, 8%), $button-red);
+    background: -o-linear-gradient(top, lighten($button-red, 8%), $button-red);
+    &:hover {
+      border-top-color: darken($button-red, 7%);
+    }
+  }
+}
+
+//////////
+//Notice//
+//////////
+
+//Right now there is one used styling
+.alert {
+  max-width: 850px;
+  text-align: left;
+  background-color: rgb(161,195,0);
+  background-color: rgba(161,195,0,.8);
+  color: #fff;
+  padding: 3px 8px 3px 17px;
+  text-shadow: rgba(99,130,0,.75) 1px 1px 1px;
+  font-size :21px;
+  @include rounded-corners (3px);
+  &.warning {
+    background-color: #800;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  margin-bottom: 5px;
 }
 

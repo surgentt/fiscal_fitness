@@ -14,4 +14,3 @@
 //= require rickshaw_with_d3
 //= require custom
 //= require graph
-//= require_tree

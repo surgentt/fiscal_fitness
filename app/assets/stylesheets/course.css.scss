@@ -4,7 +4,6 @@
 #slide {
   padding: 20px 30px 45px 30px;
   margin-bottom: 30px;
-  margin: 0 auto;
   max-width: 850px;
   font-size: 18px;
   font-weight: 200;
@@ -14,6 +13,7 @@
   @include rounded-corners (3px);
   box-shadow: 1px 1px 3px #28261f;
   position: relative;
+  margin: 0 auto;
   clear: both;
 }
 

@@ -11,9 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
-//= require d3.v3
-//= require d3.layout
-//= require rickshaw
+//= require rickshaw_with_d3
 //= require custom
 //= require graph

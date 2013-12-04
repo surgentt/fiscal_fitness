@@ -260,7 +260,7 @@ $(document).ready(function(){
       $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
     } else {
       $('.modal').show();
-      $('.modal_content').text('Try and Save More.');
+      $('.modal_content').text('Keep Trying!!. The Goal is $1M');
     }
   }
 

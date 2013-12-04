@@ -333,6 +333,8 @@ input.feedback_general {
   font-family: Georgia, serif;
   text-decoration: none;
   vertical-align: middle;
+  cursor: pointer; 
+  cursor: hand;
 
   a {
     text-decoration: none;
@@ -360,7 +362,7 @@ input.feedback_general {
     background: -ms-linear-gradient(top, lighten($button-red, 8%), $button-red);
     background: -o-linear-gradient(top, lighten($button-red, 8%), $button-red);
     &:hover {
-      border-top-color: darken($button-red, 7%);
+      border-top-color: darken($button-red, 30%);
     }
   }
 }

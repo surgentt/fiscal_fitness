@@ -263,7 +263,9 @@ input.feedback_general {
   font-size: 15px;
   font-family: Georgia, serif;
   text-decoration: none;
-  vertical-align: middle; }
+  vertical-align: middle;
+  cursor: pointer;
+  cursor: hand; }
   .button a {
     text-decoration: none; }
   .button:hover {
@@ -285,7 +287,7 @@ input.feedback_general {
     background: -ms-linear-gradient(top, #cf1d50, #ab1842);
     background: -o-linear-gradient(top, #cf1d50, #ab1842); }
     .button.bad:hover {
-      border-top-color: #8c1436; }
+      border-top-color: #25050e; }
 
 .alert {
   max-width: 850px;

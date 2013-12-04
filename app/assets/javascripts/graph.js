@@ -34,6 +34,8 @@ $(document).ready(function(){
         } else if ($('div.bothInterest')[0]) {
           var futureValue = createBoth(numOfPeriods);
           testExtraIncome(extraIncome);
+        } else {
+          var futureValue = createBoth(numOfPeriods);
         }
       }
     });

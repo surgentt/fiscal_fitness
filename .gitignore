@@ -17,3 +17,7 @@
 
 # Ignore database.yml
 config/database.yml
+
+# Ignore public/assets on github
+public/assets/*.js
+public/assets/*.css

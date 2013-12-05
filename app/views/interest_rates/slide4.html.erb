@@ -14,7 +14,7 @@
   </p>
 
   <div class="withInterest" id="irate_form">
-    <form  method=post id="iRateForm">
+    <form  method=get id="iRateForm">
     <table>
       <tr>
         <td>Monthly Investments:</td>
@@ -59,10 +59,10 @@
 
 
   <div class="bottom_left">
-    <%= link_to "Back", slide3_path, class: "button" %>
+    <%= link_to "Back", interest_rate_path(3), class: "button" %>
   </div>
 
   <div class="bottom_right">
-    <%= link_to "Next", slide5_path, class: "button" %>
+    <%= link_to "Next", interest_rate_path(5), class: "button" %>
   </div>
 </div>

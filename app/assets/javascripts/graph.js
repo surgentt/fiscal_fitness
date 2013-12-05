@@ -220,11 +220,6 @@ $(document).ready(function(){
       element: document.getElementById('y_axis'),
     });
 
-    //var legend = new Rickshaw.Graph.Legend( {
-    //    element: document.querySelector('#legend'),
-    //    graph: graph
-    //});
-
     graph.render();
 
     // We look for the total savings of just the Future Value of B

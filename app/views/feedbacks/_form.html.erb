@@ -6,7 +6,7 @@
     <%= f.text_field :email, class: "feedback_email", placeholder: 'Email' %>
   </div>
   <%= f.hidden_field :url, value: request.original_url %>
-  <div class="center">
+  <div class="modal-footer">
     <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

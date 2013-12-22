@@ -8,8 +8,9 @@ $(document).ready(function(){
 	/////////////////////////
 
 	//Slide 2 Questions
+	
 	$("#aDollarToday").click(function() {
-		$('.modal').show();
+		$('.modal').toggle();
 		$('.modal_content').text('Sure who wouldn\'t');
 	});
 
@@ -63,7 +64,6 @@ $(document).ready(function(){
 	// Tool Tips to Provide Additional Information
 
 	$('#pmt').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'How much do you think you can reasonably save per month?' });
-
 
 	/////////////////////////////////
 	//Helper Method to format money//

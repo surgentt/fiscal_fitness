@@ -14,32 +14,6 @@
       <div class="modal-body">
         <%= render partial: "feedbacks/form", locals: { feedback: Feedback.new} %>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Submit</button>
-      </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-<!-- Old COde -->
-
-<!-- <a href="#feedback" data-toggle="modal" class="feedbackButton" id="feedback_button">Feedback</a>
-
-<div class="dumbBoxWrap" id="feedbackModal">
-  <div class="vertical-offset">
-    <div class="dumbBox">
-      <button type="button" class="closeFeedbackModal">×</button>
-      <div class="feedback_modal">
-        <div id="feedback_header">
-          Feedback
-        </div>
-        <div id="feedback_body">
-
-        <%= render partial: "feedbacks/form", locals: { feedback: Feedback.new} %>
-
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- </div> -->

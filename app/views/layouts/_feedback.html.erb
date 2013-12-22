@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
+<button class="btn btn-primary btn-lg" id="feedback_button" data-toggle="modal" data-target="#myModal">
+  Feedback
 </button>
 
 <!-- Modal -->
@@ -12,21 +12,19 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        ...
+        <%= render partial: "feedbacks/form", locals: { feedback: Feedback.new} %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Submit</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
+<!-- Old COde -->
 
-
-
-<a href="#feedback" data-toggle="modal" class="feedbackButton" id="feedback_button">Feedback</a>
+<!-- <a href="#feedback" data-toggle="modal" class="feedbackButton" id="feedback_button">Feedback</a>
 
 <div class="dumbBoxWrap" id="feedbackModal">
   <div class="vertical-offset">
@@ -43,5 +41,5 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->

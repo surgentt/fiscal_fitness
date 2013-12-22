@@ -10,14 +10,12 @@ $(document).ready(function(){
 	//Slide 2 Questions
 	
 	$("#aDollarToday").click(function() {
-		$('.modal').toggle();
 		$('.modal_content').text('Sure who wouldn\'t');
 	});
 
 	$("#aDollarTomorrow").click(function() {
 		$('.modal').show();
-		$('.modal_content').text('A dollar today is better 
-			and I\'m going to show you why');
+		$('.modal_content').text('A dollar today is better and I\'m going to show you why');
 	});
 
 	$("#20today").click(function() {

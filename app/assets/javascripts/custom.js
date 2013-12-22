@@ -16,7 +16,8 @@ $(document).ready(function(){
 
 	$("#aDollarTomorrow").click(function() {
 		$('.modal').show();
-		$('.modal_content').text('That doesn\'t make much sense.');
+		$('.modal_content').text('A dollar today is better 
+			and I\'m going to show you why');
 	});
 
 	$("#20today").click(function() {

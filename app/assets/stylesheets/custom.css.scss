@@ -88,7 +88,7 @@ input {
 
 table {
   margin: 15px 0px 15px 0px;
-  border: 1px solid black;
+  border: 1px solid $black;
 }
 
 table td, th {
@@ -137,6 +137,8 @@ nav li {
 header {
   height: 45px;
   border-bottom: 1.5px solid;
+  margin-bottom: 15px;
+  padding: 5px;
 
   #logo {
     float: left;
@@ -240,8 +242,8 @@ input {
   background-clip: padding-box;
 }
 
-.close, .closeFeedbackModal {
-  padding: 6px 6px 4px 0;
+.closeModal, .closeFeedbackModal {
+  padding: 5px;
   cursor: pointer;
   background: transparent;
   border: 0;
@@ -296,14 +298,21 @@ input {
   margin:  6px 0 6px 0;
 }
 
-input.feedback_general {
-  color: blue;
+.feedback_general {
   text-align: left;
-  columns:100px 3;
-  -webkit-columns:100px 3; /* Safari and Chrome */
-  -moz-columns:100px 3; /* Firefox */
+  max-width: 350px;
+  width: 350px;
+  height: 150px;
+  padding: 5px;
+  font-size: small;
+  margin: 5px;
 }
 
+.feedback_email {
+  text-align: left;
+  font-size: small;
+  margin: 5px;
+}
 
 /*/////////*/
 /* Buttons */

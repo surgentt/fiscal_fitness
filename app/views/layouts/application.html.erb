@@ -9,6 +9,7 @@
 	</head>
 	<body>
 	<%= render 'layouts/feedback' %>
+	<%= render 'layouts/modal' %>
 	<%= render 'layouts/header' %>
 	  <div class="container">
 			<% flash.each do |key, value| %>
@@ -18,7 +19,6 @@
 				<%= yield %>
 			</div>
 			<%= render 'layouts/footer' %>
-			<%= render 'layouts/modal' %>
   	</div>
 	</body>
 </html>

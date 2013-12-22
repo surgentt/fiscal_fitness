@@ -12,28 +12,34 @@
   </p>
 
   <div class="withoutInterest" id="irate_form">
-    <form  method=get id="iRateForm" role="form">
-      <div class="form-group">
-        <label for="mSavingContributions">Monthly Savings Contribution:</label>
-        <input class="required form-control" id="pmt" type=number>
-      </div>
-      <div class="form-group">
-        <label for="mInvestments">Length of Monthly Investments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
-        <select id="yearOrMonth" size=1>
-          <option value="y">Years
-          <option value="m">Months
-        </select>
-      </div>
-      <div class="center">  
-        <button type="submit" class="button" id="howMuch">
-          How much will you save?
-        </button>
-      </div>
-      <div>
-        <label for="totalSavings">Total Savings:</label>
-        <input class="form-control" id="total" type=text value="0.00">
-      </div>
+    <form  method=get id="iRateForm">
+    <table class="form-group">
+      <tr>
+        <td>Monthly Savings Contribution:</td>
+        <td><input class="required, form-group" id="pmt" type=number></td>
+      </tr>
+      <tr>
+        <td>Length of Monthly Investments:</td>
+        <td><input class="required" id="numOfPeriods" type=number name=numOfPeriods>
+          <select id="yearOrMonth" size=1>
+            <option value="y">Years
+            <option value="m">Months
+          </select>
+        </td>
+      </tr>
+      <tr>  
+        <td class="center" colspan = "2">
+          <button class="button" id="howMuch">
+            How much will you save?
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Savings:</td>
+        <td>
+          <input id="total" type=text value="0.00">
+        </td>
+      </tr>
     </table>
     </form>
   </div>

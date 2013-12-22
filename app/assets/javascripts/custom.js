@@ -42,7 +42,7 @@ $(document).ready(function(){
 	});
 
 	//Close Any Modal
-	$('.close').click(function() {
+	$('.closeModal').click(function() {
 		$('.dumbBox').css("background-color","#fff");
 		$('.modal').hide();
 	});
@@ -59,6 +59,10 @@ $(document).ready(function(){
 		$('#feedbackModal').hide();
 	});
 
+
+	// Tool Tips to Provide Additional Information
+
+	$('#pmt').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'How much do you think you can reasonably save per month?' });
 
 
 	/////////////////////////////////

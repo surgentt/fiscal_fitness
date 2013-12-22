@@ -11,6 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery_ujs
+//= require bootstrap
 //= require rickshaw_with_d3
 //= require custom
 //= require graph

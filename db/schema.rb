@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20131127011801) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "feedbacks", force: true do |t|
     t.text     "general"
     t.text     "grammer"
@@ -38,7 +35,7 @@ ActiveRecord::Schema.define(version: 20131127011801) do
     t.string   "remember_token"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email"
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
 end

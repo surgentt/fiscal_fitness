@@ -14,9 +14,7 @@ gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~>4.0.0'
 gem 'pry', :group => :development
 
-
 # Use postgresql as the database locally and in production
-gem 'pg'
 
 group :development, :test do
 	gem 'rspec-rails', '2.13.1'
@@ -28,6 +26,7 @@ group :development, :test do
   gem 'childprocess', '0.3.6'
   # javaScript testing 
   gem 'konacha'
+  gem 'sqlite3'
 end
 
 group :test do
@@ -40,6 +39,7 @@ group :production, :staging do
 	# enables serving assets in production and setting your logger to standard out
   # Heroku Pliguin for assets gems
   gem 'rails_12factor'
+  gem 'pg'
 end
 
 group :doc do

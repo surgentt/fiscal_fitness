@@ -31,52 +31,29 @@
       </tr>
     </table>
 
-  <div class="earn" id="irate_form">
-    <form  method=get id="iRateForm">
-    <table>
-      <tr>
-        <td>Monthly Investments:</td>
-        <td><input class="required" id="pmt" type=number size=13 maxlength=13></td>
-      </tr>
-      <tr>
-        <td>Length of Monthly Investments:</td>
-        <td><input class="required" id="numOfPeriods" type=number size=6 maxlength=3>
-          <select id="yearOrMonth" size=1>
-            <option value="y">Years
-            <option value="m">Months
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Interest Rate:</td>
-        <td><input class="required" type=number id="interest" size=6 maxlength=5><b> %</b></td>
-      </tr>
-      <tr>
-        <td class="center" colspan = "2">
-          <button class="button" id="howMuch">
-            Earnings
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Savings with Interest:</td>
-        <td>
-          <input id="totalInterest" type=text name=total value="0.00" size=20>
-        </td>
-      </tr>
-      <tr>
-        <td>Total Savings with out Interest:</td>
-        <td>
-          <input id="totalNoInterest" type=text name=total value="0.00" size=20>
-        </td>
-      </tr>
-      <tr>
-        <td>Extra Income:</td>
-        <td>
-          <input id="difference" type=text name=total value="0.00" size=20>
-        </td>
-      </tr>
-    </table>
+  <div id="irate_form">
+    <form  method=get id="iRateForm" role="form">
+      <div class="form-group">
+        <label for="mSavingContributions">Monthly Savings Contribution:</label>
+        <input class="required form-control" id="pmt" type=number>
+      </div>
+      <div class="form-group">
+        <label for="mInvestments">Length of Monthly Investments:</label>
+        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
+        <select id="yearOrMonth" size=1>
+          <option value="y">Years
+          <option value="m">Months
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="interest">Interst Rate:</label>
+        <input class="required form-control" id="interest" type=number name=interest>
+      </div>
+      <div class="center">  
+        <button type="submit" class="button" id="howMuch">
+          How much will you save?
+        </button>
+      </div>
     </form>
   </div>
 
@@ -85,6 +62,21 @@
     <div id="legend" class="rickshaw_legend">
       <ul><li class="line"><div class="swatch" style="background-color: rgb(173, 216, 230);"></div><span class="label">Interest Income</span></li><li class="line"><div class="swatch" style="background-color: rgb(70, 130, 180);"></div><span class="label">No Interest Income</span></li></ul>
     </div>
+  </div>
+
+  <div>
+    <label for="totalInterest">Total Savings With Interst Rates:</label>
+    <input class="form-control" id="totalInterest" name=total value="0.00">
+  </div>
+
+  <div>
+    <label for="totalNoInterest">Total Savings without Interest Rates:</label>
+    <input class="form-control" id="totalNoInterest" name=total value="0.00">
+  </div>
+
+  <div>
+    <label for="totalInterest">Extra Income:</label>
+    <input class="form-control" id="difference" name=total value="0.00">
   </div>
 
     <div class="bottom_left">

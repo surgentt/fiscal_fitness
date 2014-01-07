@@ -1,3 +1,16 @@
+== HOW do Modal's Work
+
+
+* Feedback Button
+  - Application _feedback.html.erb appears on every page
+  -  
+
+* Buttons
+- Add this bootstrap class into the button => data-toggle="modal" data-target="#myModal
+- Shows the hidden _modal.html.erb
+
+
+
 == README
 
 This README would normally document whatever steps are necessary to get the

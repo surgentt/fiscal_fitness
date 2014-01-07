@@ -14,30 +14,25 @@ $(document).ready(function(){
 	});
 
 	$("#aDollarTomorrow").click(function() {
-		$('.modal').show();
 		$('.modal_content').text('A dollar today is better and I\'m going to show you why');
 	});
 
 	$("#20today").click(function() {
-		$('.modal').show();
 		//$('.dumbBox').css("background-color","#FF2621");
 		$('.modal_content').text('You didn\'t earn any interest.');
 	});
 
 	$("#25twoWeeks").click(function() {
-		$('.modal').show();
 		//$('.dumbBox').css("background-color","#40E50D");
 		$('.modal_content').text('You just earned 25% interst on your money.');
 	});
 
 	//Slide 4 & Slide 7_1
 	$("#Higher").click(function() {
-		$('.modal').show();
 		$('.modal_content').text('Correct');
 	});
 
 	$("#Lower").click(function() {
-		$('.modal').show();
 		$('.modal_content').text('Incorrect');
 	});
 

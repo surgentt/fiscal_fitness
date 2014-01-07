@@ -206,60 +206,16 @@ input {
   }
 }
 
-/*///////////*/
-/* Modal CSS */
-/*///////////*/
 
-/* http://blog.avtex.com/2012/01/26/cross-browser-css-only-modal-box/ */
+// Overwrite Twitter Bootstrap Modals
 
-.dumbBoxWrap { /* The dic that shows/hides */
-  display: none; /* Start out hiddden */
-  z-index: 4001; /* high z-index */
-}
-
-.vertical-offset {
-  position: fixed;
-  top: 16%; //How far from the top the offset is
-  width: 100%;
-  z-index:4002;
-}
-
-.dumbBox {
-  max-width: 400px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: $white;
-  border: 1px solid $black;
-  background-color: #fff;
-  border: 1px solid #999;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 6px;
-  outline: 0;
-  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
-  box-shadow: 0 3px 9px rgba(0,0,0,0.5);
-  background-clip: padding-box;
-}
-
-.closeModal, .closeFeedbackModal {
-  padding: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  -webkit-appearance: none;
-  float: right;
-  font-size: 21px;
-  font-weight: bold;
-  line-height: .5;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
-  opacity: .2;
-  filter: alpha(opacity=20);
+.modal-dialog {
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 100px;
 }
 
 .modal_content {
-  padding: 4px 10px 4px 10px;
-  margin: 15px 0 15px 0;
   text-align: center;
 }
 
@@ -280,17 +236,6 @@ input {
   &:hover {
     color: $white;
   }
-}
-
-.feedback_modal {
-  padding: 5px 20px 5px 20px;
-  margin: 15px 0 15px 0;
-}
-
-#feedback_header {
-  border-bottom: 2px solid;
-  text-align: left;
-  font-weight: bold;
 }
 
 #feedback_body {
@@ -398,3 +343,42 @@ input {
   margin-bottom: 5px;
 }
 
+
+
+/*///////////*/
+/* Modal CSS */
+/*///////////*/
+
+.modal.large {
+  width: 80%; /* respsonsive width */
+  margin-left:-40%; /* width/2) */ 
+}
+
+.dumbBoxWrap { /* The dic that shows/hides */
+  display: none; /* Start out hiddden */
+  z-index: 4001; /* high z-index */
+}
+
+.vertical-offset {
+  position: fixed;
+  top: 16%; //How far from the top the offset is
+  width: 100%;
+  z-index:4002;
+}
+
+.dumbBox {
+  max-width: 400px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $white;
+  border: 1px solid $black;
+  background-color: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+  box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+  background-clip: padding-box;
+}

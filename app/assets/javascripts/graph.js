@@ -11,15 +11,18 @@ $(document).ready(function(){
   $("#howMuch").click(function (ev) {
     ev.preventDefault();
     var numOfPeriods = 0;
+
+    // Need to improve my emtpy code validations here
+
     //Validates for empty code only. 
     //Loop through all the required fields. If any are blank jump out
     //http://stackoverflow.com/questions/20082915/jquery-required-fields-loop-based-on-css-class
-    $('.required').each(function() {
-      if($(this).val().length == 0) {
-        $('.modal').show();
-        $('.modal_content').text('Please fill in the Required Fields');
-        return false;
-      } else {
+    // $('.required').each(function() {
+    //   if($(this).val().length == 0) {
+    //     $('.myModal').show();
+    //     $('.modal_content').text('Please fill in the Required Fields');
+    //     return false;
+    //   } else {
         clearGraph();
         //Adjust the number of periods from years to month
         numOfPeriods = yearToMonthAdj();
@@ -37,8 +40,8 @@ $(document).ready(function(){
         } else {
           var futureValue = createBoth(numOfPeriods);
         }
-      }
-    });
+    //   }
+    // });
   });
 
   function clearGraph() {
@@ -242,35 +245,34 @@ $(document).ready(function(){
 
 
   function testFVforMillionaire(futureValue) {
+    console.log(futureValue)
     if (futureValue > 1000000) {
-      $('.modal').show();
-      $('.modal_content').text('Your a Millionaire, but wasn\'t that pretty hard');
+      $('.modal_content').text("You're a Millionare!!");
+      $('#myModal').modal("show");
     } else {
-      $('.modal').show();
-      $('.modal_content').text('Keeping trying! You\'re not a millionaire yet.');
+      $('.modal_content').text('Keep Trying!');
+      $('#myModal').modal("show");
     }
   }
 
   function testFVforEarnings(futureValue) {
     if (futureValue > 1000000) {
-      $('.modal').show();
-      $('.modal_content').text('Your a Millionaire. Did you see how much easier that was with interest rates?');
+      $('.modal_content').text("Your a Millionaire. Did you see how much easier that was with interest rates?");
+      $('#myModal').modal("show");
     } else {
-      $('.modal').show();
-      $('.modal_content').text('Keep Trying!!. The Goal is $1M');
+      $('.modal_content').text("Keep Trying! The Goal is $1M");
+      $('#myModal').modal("show");
     }
   }
 
   function testExtraIncome(extraIncome) {
     if (extraIncome > 100000) {
-      $('.modal').show();
       $('.modal_content').text('You just saved ' + differenceString + ' Extra Income through the power of interest rates. Seems Awesome right.');
+      $('#myModal').modal("show");
     } else {
-      $('.modal').show();
       $('.modal_content').text('Keep trying. You only earned '+ differenceString + 
         ' in extra income');
+      $('#myModal').modal("show");
     }
   }
-
-
 });

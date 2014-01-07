@@ -10,31 +10,31 @@
     Amount of Payments | Number of Payments | Interest Rate
   </p>
   <p>
-    Lets give the previous example another attempt, but this time you get to use the power of interest rates. 
+    Let's give the previous example another attempt, but this time you get to use the power of interest rates. 
   </p>
 
   <div class="withInterest" id="irate_form">
     <form  method=get id="iRateForm" role="form">
       <div class="form-group">
         <label for="mSavingContributions">Monthly Savings Contribution:</label>
-        <input class="required form-control" id="pmt" type=number>
+        <input class="required form-control tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
-        <label for="mInvestments">Length of Monthly Investments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
-        <select id="yearOrMonth" size=1>
-          <option value="y">Years
-          <option value="m">Months
-        </select>
+        <label for="mInvestments">Length of Monthly Investments in Years:</label>
+        <input class="required form-control tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
-        <input class="required form-control" id="interest" type=number name=interest>
+        <input class="required form-control tipInterset" id="interest" type=number name=interest>
       </div>
       <div class="center">  
         <button type="submit" class="button" id="howMuch">
           How much will you save?
         </button>
+      </div>
+      <div>
+        <label for="totalSavings">Total Savings:</label>
+        <input class="form-control" id="total" type=text value="0.00">
       </div>
     </form>
   </div>
@@ -46,10 +46,6 @@
     </div>
   </div>
 
-  <div>
-    <label for="totalSavings">Total Savings:</label>
-    <input class="form-control" id="total" type=text value="0.00">
-  </div>
 
   <div class="bottom_left">
     <%= link_to "Back", interest_rate_path(3), class: "button" %>

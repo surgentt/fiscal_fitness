@@ -1,12 +1,12 @@
 <% provide(:title, 'Interest Rates') %>
 
 <div id="slide">
-  <h2>How much extra can you saving with interest?</h2>
+  <h2>How much extra can you save with interest?</h2>
   <p>
-    Lets check out exactly how much you are earning, through the use of interest rates. 
+    Let's check out exactly how much you are earning, through the use of interest rates. 
   </p>
 
-  <h3>Remember what you are actually doing is Investing, not Saving MOVE THIS TO A QUESTION!!</h3> 
+  <h4>What you are actually doing here is Investing not just saving</h4> 
 
   <p>
     See if you can generate an additional $100,000 of Extra Income that you would not have otherwise received if it wasn't for interest rates.
@@ -17,19 +17,15 @@
     <form  method=get id="iRateForm" role="form">
       <div class="form-group">
         <label for="mSavingContributions">Monthly Savings Contribution:</label>
-        <input class="required form-control" id="pmt" type=number>
+        <input class="required form-control tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
         <label for="mInvestments">Length of Monthly Investments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
-        <select id="yearOrMonth" size=1>
-          <option value="y">Years
-          <option value="m">Months
-        </select>
+        <input class="required form-control tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
-        <input class="required form-control" id="interest" type=number name=interest>
+        <input class="required form-control tipInterset" id="interest" type=number name=interest>
       </div>
       <div class="center">  
         <button type="submit" class="button" id="howMuch">
@@ -46,23 +42,20 @@
     </div>
   </div>
 
-  <div>
-    <label for="totalInterest">Total Savings With Interst Rates:</label>
-    <input class="form-control" id="totalInterest" name=total value="0.00">
+  <div id="irate_form">
+    <div>
+      <label for="totalInterest">Total Savings with Interst Rates:</label>
+      <input class="form-control" id="totalInterest" name=total value="0.00">
+    </div>
+    <div>
+      <label for="totalNoInterest">Total Savings without Interest Rates:</label>
+      <input class="form-control" id="totalNoInterest" name=total value="0.00">
+    </div>
+    <div>
+      <label for="totalInterest">Extra Income:</label>
+      <input class="form-control" id="difference" name=total value="0.00">
+    </div>
   </div>
-
-  <div>
-    <label for="totalNoInterest">Total Savings without Interest Rates:</label>
-    <input class="form-control" id="totalNoInterest" name=total value="0.00">
-  </div>
-
-  <div>
-    <label for="totalInterest">Extra Income:</label>
-    <input class="form-control" id="difference" name=total value="0.00">
-  </div>
-
-
-
 
   <div class="bottom_left">
     <%= link_to "Back", interest_rate_path(4), class: "button" %>

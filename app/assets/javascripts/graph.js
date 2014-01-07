@@ -51,17 +51,8 @@ $(document).ready(function(){
   }
 
   function yearToMonthAdj() {
-		//Adjust the num of years to Monthly PMT
-    //$('#iRateForm').val() === 'Years'
     var periods =  $('#numOfPeriods').val();
-
-    if($('#yearOrMonth').val() == 'y') {
-      //Multiply the value by 12
-      return periods * 12;
-    } else {
-      //Month in selected, no calculations needed
-      return periods;
-    }
+    return periods * 12;
   }
 
   function runFvNoInterest(numOfPeriods, pmt) {

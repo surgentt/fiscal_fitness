@@ -14,17 +14,17 @@ $(document).ready(function(){
 	});
 
 	$("#aDollarTomorrow").click(function() {
-		$('.modal_content').text('A dollar today is better and I\'m going to show you why');
+		$('.modal_content').text('A dollar today is better and I\'m going to show you why.');
 	});
 
 	$("#20today").click(function() {
 		//$('.dumbBox').css("background-color","#FF2621");
-		$('.modal_content').text('You didn\'t earn any interest.');
+		$('.modal_content').text('Incorrect: You didn\'t earn any interest.');
 	});
 
 	$("#25twoWeeks").click(function() {
 		//$('.dumbBox').css("background-color","#40E50D");
-		$('.modal_content').text('You just earned 25% interst on your money.');
+		$('.modal_content').text('That is Correct: You just earned 25% interst on your money.');
 	});
 
 	//Slide 4 & Slide 7_1
@@ -57,7 +57,12 @@ $(document).ready(function(){
 
 	// Tool Tips to Provide Additional Information
 
-	$('#pmt').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'How much do you think you can reasonably save per month?' });
+	$('.tipSavings').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'How much do you think you can reasonably save per month?' });
+
+	$('.tipLength').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'How many years will you make those montly investments?' });
+
+	$('.tipInterset').tooltip({'trigger':'focus', 'placement': 'right', 'title': 'What Interest Rate can you earn on an Annual Percnetage Rate (APR)?' });
+
 
 	/////////////////////////////////
 	//Helper Method to format money//

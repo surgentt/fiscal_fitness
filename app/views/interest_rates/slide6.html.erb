@@ -40,10 +40,6 @@
       <div class="form-group">
         <label for="mInvestments">Length of Monthly Investments:</label>
         <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
-        <select id="yearOrMonth" size=1>
-          <option value="y">Years
-          <option value="m">Months
-        </select>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
@@ -64,19 +60,19 @@
     </div>
   </div>
 
-  <div>
-    <label for="totalInterest">Total Savings With Interst Rates:</label>
-    <input class="form-control" id="totalInterest" name=total value="0.00">
-  </div>
-
-  <div>
-    <label for="totalNoInterest">Total Savings without Interest Rates:</label>
-    <input class="form-control" id="totalNoInterest" name=total value="0.00">
-  </div>
-
-  <div>
-    <label for="totalInterest">Extra Income:</label>
-    <input class="form-control" id="difference" name=total value="0.00">
+  <div id="irate_form">
+    <div>
+      <label for="totalInterest">Total Savings With Interst Rates:</label>
+      <input class="form-control" id="totalInterest" name=total value="0.00">
+    </div>
+    <div>
+      <label for="totalNoInterest">Total Savings without Interest Rates:</label>
+      <input class="form-control" id="totalNoInterest" name=total value="0.00">
+    </div>
+    <div>
+      <label for="totalInterest">Extra Income:</label>
+      <input class="form-control" id="difference" name=total value="0.00">
+    </div>
   </div>
 
     <div class="bottom_left">

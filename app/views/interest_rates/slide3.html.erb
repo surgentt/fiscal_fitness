@@ -15,15 +15,11 @@
     <form  method=get id="iRateForm" role="form">
       <div class="form-group">
         <label for="mSavingContributions">Monthly Savings Contribution:</label>
-        <input class="required form-control" id="pmt" type=number>
+        <input class="required form-control tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
-        <label for="mInvestments">Length of Monthly Investments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
-        <select id="yearOrMonth" size=1>
-          <option value="y">Years
-          <option value="m">Months
-        </select>
+        <label for="mInvestments">Length of Monthly Savings Contributions in Years:</label>
+        <input class="required form-control tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="center">  
         <button type="submit" class="button" id="howMuch">

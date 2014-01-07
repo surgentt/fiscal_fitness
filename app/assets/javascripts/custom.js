@@ -10,21 +10,21 @@ $(document).ready(function(){
 	//Slide 2 Questions
 	
 	$("#aDollarToday").click(function() {
-		$('.modal_content').text('Sure who wouldn\'t');
+		$('.modal_content').text('Great Job!');
 	});
 
 	$("#aDollarTomorrow").click(function() {
-		$('.modal_content').text('A dollar today is better and I\'m going to show you why.');
+		$('.modal_content').text('Try Again: A Dollar Today is better and I\'m going to show you why.');
 	});
 
 	$("#20today").click(function() {
 		//$('.dumbBox').css("background-color","#FF2621");
-		$('.modal_content').text('Incorrect: You didn\'t earn any interest.');
+		$('.modal_content').text('You didn\'t earn any interest.');
 	});
 
 	$("#25twoWeeks").click(function() {
 		//$('.dumbBox').css("background-color","#40E50D");
-		$('.modal_content').text('That is Correct: You just earned 25% interst on your money.');
+		$('.modal_content').text('That is Correct: You just earned 25% interest on your money.');
 	});
 
 	//Slide 4 & Slide 7_1

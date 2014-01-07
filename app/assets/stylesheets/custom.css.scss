@@ -117,7 +117,7 @@ table td, th {
 
 nav ul {
   max-margin-right: 30px;
-  padding: 5px 5px 5px 5px;
+  padding: 22px 11px 5px 5px;
 }
 
 nav li {
@@ -131,22 +131,28 @@ nav li {
   margin: 0 auto;
 }
 
+#logo2 {
+  float: left;
+}
+
 /* header */
 
 header {
-  height: 45px;
+  height: 82px;
   border-bottom: 1.5px solid;
   margin-bottom: 15px;
   padding: 5px;
 
   #logo {
     float: left;
-    margin-left: 10px;
+    margin-left: -3px;
     font-size: 2em;
     color: $green;
     padding: 15px 5px 10px 5px;
     font-weight: bold;
     text-decoration: none;
+    position: relative;
+    bottom: -35px;
     &:hover {
       color: lighten($green, 5%);
       text-decoration: none;

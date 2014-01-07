@@ -238,20 +238,20 @@ $(document).ready(function(){
   function testFVforMillionaire(futureValue) {
     console.log(futureValue)
     if (futureValue > 1000000) {
-      $('.modal_content').text("You're a Millionare!!");
+      $('.modal_content').text("You saved " + futureValueString + ". That was hard");
       $('#myModal').modal("show");
     } else {
-      $('.modal_content').text('Keep Trying!');
+      $('.modal_content').text("Keep Trying! You only saved " + futureValueString);
       $('#myModal').modal("show");
     }
   }
 
   function testFVforEarnings(futureValue) {
     if (futureValue > 1000000) {
-      $('.modal_content').text("Your a Millionaire. Did you see how much easier that was with interest rates?");
+      $('.modal_content').text("You Saved " + futureValueString + ". Did you see how much easier that was with interest rates?");
       $('#myModal').modal("show");
     } else {
-      $('.modal_content').text("Keep Trying! The Goal is $1M");
+      $('.modal_content').text("Keep Trying! The Goal is $1M. You earned " + futureValueString );
       $('#myModal').modal("show");
     }
   }

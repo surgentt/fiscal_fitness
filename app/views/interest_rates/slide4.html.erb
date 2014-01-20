@@ -14,18 +14,18 @@
   </p>
 
   <div class="withInterest" id="irate_form">
-    <form  method=get id="iRateForm" role="form">
+    <form  method=get class="form-inline" id="iRateForm" role="form">
       <div class="form-group">
-        <label for="mSavingContributions">Monthly Savings Contribution:</label>
-        <input class="required form-control tipSavings" id="pmt" type=number>
+        <label for="mSavingContributions">Monthly Savings Contributions:</label>
+        <input class="required form-control dollar_input tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
         <label for="mInvestments">Length of Monthly Investments in Years:</label>
-        <input class="required form-control tipLength" id="numOfPeriods" type=number name=numOfPeriods>
+        <input class="required form-control dollar_input tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
-        <input class="required form-control tipInterset" id="interest" type=number name=interest>
+        <input class="required form-control interest_input tipInterset" type=number>%
       </div>
       <div class="center">  
         <button type="submit" class="button" id="howMuch">

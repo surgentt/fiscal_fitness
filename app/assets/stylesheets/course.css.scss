@@ -27,13 +27,21 @@
   padding: 3px 5px 3px 5px;
 }
 
+//////////////////
+// Form Styling //
+//////////////////
+
 #irate_form {
   margin: 0 auto;
   width: 480px;
 }
 
-input#interest {
+input.interest_input {
   width: 70px;
+}
+
+input.dollar_input {
+  width: 120px;
 }
 
 ///////////////

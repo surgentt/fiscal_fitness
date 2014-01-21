@@ -234,7 +234,6 @@ $(document).ready(function(){
   //Results of the Exercies / Goal //
   ///////////////////////////////////
 
-
   function testFVforMillionaire(futureValue) {
     console.log(futureValue)
     if (futureValue > 1000000) {

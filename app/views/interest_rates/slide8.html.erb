@@ -1,6 +1,10 @@
 <% provide(:title, 'Interest Rates') %>
 
 <div id="slide">
+  <div id="slide_number">
+    Slide: 8/9
+  </div>
+
   <h2>What will Interest Rates COST you?</h2>
 
   <p>
@@ -32,24 +36,24 @@
     </tr>
   </table>
 
-
   <div id="irate_form">
     <form  method=get id="iRateForm" role="form">
       <div class="form-group">
         <label for="mSavingContributions">Monthly Payments:</label>
-        <input class="required form-control" id="pmt" type=number>
+        <input class="required form-control dollar_input tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
-        <label for="mInvestments">Length of Monthly Payments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
+        <label for="mInvestments">Length of Monthly Payments in Years:</label>
+        <input class="required form-control dollar_input tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
-        <input class="required form-control" id="interest" type=number name=interest>
+        <div class="percent_style">%</div>
+        <input class="required form-control interest_input tipInterset" id="interest" type=number>
       </div>
       <div class="center">  
         <button type="submit" class="bad button" id="howMuch">
-          How much does Debt Cost?
+          How much will debt Cost?
         </button>
       </div>
     </form>
@@ -63,17 +67,17 @@
   </div>
 
   <div id="irate_form">
-    <div>
+    <div class="form-group">
       <label for="totalInterest">Total Expense including Interst Rates:</label>
-      <input class="form-control" id="totalInterest" name=total value="0.00">
+      <input class="form-control total_input" id="totalInterest" name=total value="0.00">
     </div>
-    <div>
+    <div class="form-group">
       <label for="totalNoInterest">Total Expense without Interest Rates:</label>
-      <input class="form-control" id="totalNoInterest" name=total value="0.00">
+      <input class="form-control total_input" id="totalNoInterest" name=total value="0.00">
     </div>
-    <div>
+    <div class="form-group">
       <label for="totalInterest">Extra Spent:</label>
-      <input class="form-control" id="difference" name=total value="0.00">
+      <input class="form-control total_input" id="difference" name=total value="0.00">
     </div>
   </div>
 

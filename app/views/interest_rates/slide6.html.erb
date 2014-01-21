@@ -1,6 +1,11 @@
 <% provide(:title, 'Interest Rates') %>
 
 <div id="slide">
+
+  <div id="slide_number">
+    Slide: 6/9
+  </div>
+
   <h2>What can Interest Rates realistically EARN you?</h2>
     <p>
       Let&apos;s look at some actual interest rates that you can actually expect to earn. Remember, these rates are just approximations. The actual rate you will earn, can vary depending on the length of the investment and the amount of your payments.
@@ -31,23 +36,24 @@
       </tr>
     </table>
 
-  <div id="irate_form">
+  <div class="bothInterest" id="irate_form">
     <form  method=get id="iRateForm" role="form">
       <div class="form-group">
         <label for="mSavingContributions">Monthly Savings Contributions:</label>
-        <input class="required form-control" id="pmt" type=number>
+        <input class="required form-control dollar_input tipSavings" id="pmt" type=number>
       </div>
       <div class="form-group">
-        <label for="mInvestments">Length of Monthly Investments:</label>
-        <input class="required form-control" id="numOfPeriods" type=number name=numOfPeriods>
+        <label for="mInvestments">Length of Monthly Investments in Years:</label>
+        <input class="required form-control dollar_input tipLength" id="numOfPeriods" type=number name=numOfPeriods>
       </div>
       <div class="form-group">
         <label for="interest">Interst Rate:</label>
-        <input class="required form-control" id="interest" type=number name=interest>
+        <div class="percent_style">%</div>
+        <input class="required form-control interest_input tipInterset" id="interest" type=number>
       </div>
       <div class="center">  
         <button type="submit" class="button" id="howMuch">
-          How much will you save?
+          How much will you Save?
         </button>
       </div>
     </form>
@@ -61,17 +67,17 @@
   </div>
 
   <div id="irate_form">
-    <div>
+    <div class="form-group">
       <label for="totalInterest">Total Savings With Interst Rates:</label>
-      <input class="form-control" id="totalInterest" name=total value="0.00">
+      <input class="form-control total_input" id="totalInterest" name=total value="0.00">
     </div>
-    <div>
+    <div class="form-group">
       <label for="totalNoInterest">Total Savings without Interest Rates:</label>
-      <input class="form-control" id="totalNoInterest" name=total value="0.00">
+      <input class="form-control total_input" id="totalNoInterest" name=total value="0.00">
     </div>
-    <div>
+    <div class="form-group">
       <label for="totalInterest">Extra Income:</label>
-      <input class="form-control" id="difference" name=total value="0.00">
+      <input class="form-control total_input" id="difference" name=total value="0.00">
     </div>
   </div>
 

@@ -3,7 +3,6 @@
 
 #slide {
   padding: 20px 30px 45px 30px;
-
   max-width: 850px;
   font-size: 18px;
   font-weight: 200;
@@ -17,13 +16,21 @@
   clear: both;
 }
 
-.approx_irates {
+#slide_number {
+  font-size: 60%;
+  position: absolute;
+  right: 15px;
+  top: 5px;
+}
+
+table.approx_irates {
   text-align: center;
   font-size: 16px;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-.approx_irates td, th {
+table.approx_irates td, th {
   padding: 3px 5px 3px 5px;
 }
 
@@ -34,19 +41,31 @@
 #irate_form {
   margin: 0 auto;
   width: 480px;
+  .form-group {
+    height: 30px;
+  }
+  .dollar_input {
+    float: right;
+    width: 120px;
+  }
+  .interest_input {
+    float:right;
+    width: 90px
+  }
+  .percent_style {
+    float:right;
+    margin-top: 8px;
+    margin-left: 3px;
+  }
+  .total_input {
+    float: right;
+    width: 140px;
+  }
 }
 
-input.interest_input {
-  width: 70px;
-}
-
-input.dollar_input {
-  width: 120px;
-}
-
-///////////////
-//Positioning//
-///////////////
+//////////////////////
+//Button Positioning//
+//////////////////////
 
 .bottom_right {
   position: relative;
@@ -98,16 +117,6 @@ input.dollar_input {
   vertical-align: top;
   margin: 0 0 0 10px;
   top: 10px;
-}
-
-//Not being Uses
-.x_tick {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  border-left: 1px dotted rgba(0,0,0,.2);
-  pointer-events: none;
 }
 
 
